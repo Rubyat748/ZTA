@@ -5,62 +5,103 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ZTA - Astrophotography</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box}
+  *{margin:0;padding:0;box-sizing:border-box;}
   body{
     font-family:'Segoe UI',Roboto,sans-serif;
     color:#fff;
     background:#000 url('assets/background.png') center/cover no-repeat;
     scroll-behavior:smooth;
   }
+
+  /* Header */
   header{
     display:flex;align-items:center;justify-content:space-between;
     padding:18px;position:sticky;top:0;background:rgba(0,0,0,.6);
-    backdrop-filter:blur(6px);z-index:100
+    backdrop-filter:blur(6px);z-index:100;
   }
-  header img{height:56px}
-  nav a{margin-left:18px;color:#fff;text-decoration:none;font-weight:600}
-  nav a:hover{color:#8ab4ff}
+  header img{height:56px;}
+  nav a{
+    margin-left:18px;color:#fff;text-decoration:none;font-weight:600;
+    transition: color .3s;
+  }
+  nav a:hover{color:#8ab4ff;}
+  @media(max-width:768px){
+    header{flex-direction:column;}
+    nav a{margin:8px 0 0;}
+  }
+
+  /* Hero */
   .hero{
     display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;min-height:80vh;padding:28px
+    text-align:center;min-height:80vh;padding:28px;
+    animation: fadeIn 1.5s ease-in-out;
   }
-  .hero h1{font-size:clamp(28px,6vw,64px);margin-bottom:12px}
-  .hero p{color:#ccc;margin-bottom:18px}
+  .hero h1{font-size:clamp(28px,6vw,64px);margin-bottom:12px;}
+  .hero p{color:#ccc;margin-bottom:18px;}
   .btn-subscribe{
     padding:10px 20px;background:#8ab4ff;color:#000;
-    border-radius:12px;border:none;font-weight:700;cursor:pointer
+    border-radius:12px;border:none;font-weight:700;cursor:pointer;
+    transition: transform .3s, background .3s;
   }
-  section{padding:48px 20px}
-  section h2{text-align:center;font-size:32px;margin-bottom:18px}
-  section p{color:#ccc;text-align:center;max-width:900px;margin:0 auto 36px}
+  .btn-subscribe:hover{
+    transform: scale(1.05);
+    background:#6fa0ff;
+  }
+
+  /* Sections */
+  section{padding:48px 20px;}
+  section h2{text-align:center;font-size:32px;margin-bottom:18px;}
+  section p{color:#ccc;text-align:center;max-width:900px;margin:0 auto 36px;}
+
   .glass{
     background:rgba(0,0,0,.45);backdrop-filter:blur(8px);
-    border-radius:16px;padding:26px;max-width:1000px;margin:0 auto
+    border-radius:16px;padding:26px;max-width:1000px;margin:0 auto;
+    animation: fadeIn 1.5s ease-in-out;
   }
+
+  /* Gallery */
   .gallery{
     position:relative;max-width:1000px;height:520px;margin:0 auto;
     border-radius:20px;overflow:hidden;display:flex;align-items:center;justify-content:center;
-    background:rgba(0,0,0,.25)
+    background:rgba(0,0,0,.25);
   }
   .gallery img{
     position:absolute;width:100%;height:100%;object-fit:cover;
-    border-radius:20px;opacity:0;transition:opacity 1s ease-in-out
+    border-radius:20px;opacity:0;transition:opacity 1s ease-in-out, transform 1s ease;
+    transform: scale(1.1);
   }
-  .gallery img.active{opacity:1}
-  .contact-form{display:flex;flex-direction:column;max-width:600px;margin:0 auto}
+  .gallery img.active{
+    opacity:1;transform: scale(1);
+  }
+  @media(max-width:768px){
+    .gallery{height:320px;}
+  }
+
+  /* Contact Form */
+  .contact-form{display:flex;flex-direction:column;max-width:600px;margin:0 auto;}
   .contact-form input,.contact-form textarea{
     margin-bottom:14px;padding:12px;border-radius:10px;border:none;
-    background:rgba(255,255,255,.08);color:#fff
+    background:rgba(255,255,255,.08);color:#fff;transition: background .3s;
+  }
+  .contact-form input:focus,.contact-form textarea:focus{
+    background:rgba(255,255,255,.15);outline:none;
   }
   .contact-form button{
     padding:12px;background:#8ab4ff;border:none;
-    border-radius:10px;font-weight:700;cursor:pointer
+    border-radius:10px;font-weight:700;cursor:pointer;
+    transition: background .3s, transform .3s;
   }
-  footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa}
-  @media(max-width:768px){
-    header{flex-direction:column}
-    nav a{margin:8px 0 0}
-    .gallery{height:320px}
+  .contact-form button:hover{
+    background:#6fa0ff;transform: scale(1.05);
+  }
+
+  /* Footer */
+  footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
+
+  /* Animations */
+  @keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
   }
 </style>
 </head>
@@ -119,9 +160,9 @@
   const loadingText = container.querySelector('p');
 
   const folder = 'assets/gallery/';
-  const ext = '.jpg';   
-  const maxTry = 200;   
-  const slideTime = 3000;
+  const ext = '.jpg';
+  const maxTry = 200;
+  const slideTime = 3500;
 
   let imgs = [];
 
@@ -153,8 +194,8 @@
 
   setInterval(()=>{
     imgs[index].classList.remove('active');
-    index = (index+1) % imgs.length; 
-    imgs[index].classList.add('active'); 
+    index = (index+1) % imgs.length;
+    imgs[index].classList.add('active');
   },slideTime);
 })();
 </script>
