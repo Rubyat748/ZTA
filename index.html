@@ -1,234 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZTA - Astrophotography Universe</title>
+<title>ZTA - Astrophotography</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet">
+
 <style>
+/* ==================================================== */
+/* RESET & BODY STYLING */
+/* ==================================================== */
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
-  font-family:'Segoe UI',sans-serif;
+  font-family:'Segoe UI',Roboto,sans-serif;
   color:#fff;
-  background:#0b0b0b url('assets/1.png') center/cover no-repeat fixed;
-  scroll-behavior:smooth;
+  background:#000;
   overflow-x:hidden;
-  position:relative;
+  scroll-behavior:smooth;
+  perspective:1000px;
 }
+
+/* ==================================================== */
+/* BACKGROUND & ANIMATED NEBULA */
+/* ==================================================== */
+body::before{
+  content:"";
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:transparent url('assets/background.png') center/cover no-repeat;
+  z-index:-4;
+  animation:bgZoom 120s linear infinite;
+}
+@keyframes bgZoom{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.02);}
+  100%{transform:scale(1);}
+}
+
+/* ==================================================== */
+/* STARS, PARTICLES, SHOOTING STARS */
+/* ==================================================== */
+.stars, .shooting-star, .particles, .nebula{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  pointer-events:none;z-index:-3;
+}
+.star{
+  position:absolute;background:white;border-radius:50%;
+  animation:twinkle 2s infinite alternate;
+}
+@keyframes twinkle{from{opacity:0.2;}to{opacity:1;}}
+.particle{
+  position:absolute;width:2px;height:2px;
+  background:white;border-radius:50%;opacity:0.6;
+}
+.shooting-star div{
+  position:absolute;width:2px;height:80px;
+  background:linear-gradient(white,transparent);
+  opacity:0;
+}
+.nebula canvas{
+  position:absolute;top:0;left:0;width:100%;height:100%;z-index:-2;
+}
+
+/* ==================================================== */
+/* HEADER */
+/* ==================================================== */
 header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:16px 20px;
-  position:sticky;
-  top:0;
-  background:rgba(0,0,0,.75);
-  backdrop-filter:blur(8px);
-  z-index:100;
-}
-header img{
-  height:50px;
-  transition:transform .3s;
-}
-header img:hover{transform:rotate(-6deg);}
-nav a{
-  margin-left:16px;
-  color:#fff;
-  text-decoration:none;
-  font-weight:600;
-  font-size:15px;
-  transition:color .3s;
-}
-nav a:hover{color:#8ab4ff;}
-.hero{
-  min-height:85vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:20px;
-}
-.hero h1{
-  font-family:"Caveat Brush",cursive;
-  font-size:clamp(32px,7vw,70px);
-  margin-bottom:12px;
-}
-.hero p{
-  font-size:1.4rem;
-  color:#ddd;
-  max-width:800px;
-  margin-bottom:20px;
-}
-.btn{
-  padding:12px 28px;
-  background:#8ab4ff;
-  color:#000;
-  border-radius:12px;
-  text-decoration:none;
-  font-weight:700;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px;position:sticky;top:0;
+  background:rgba(0,0,0,.6);backdrop-filter:blur(6px);z-index:100;
   transition:all .3s;
 }
-.btn:hover{
-  transform:scale(1.08);
-  background:#6fa0ff;
-  box-shadow:0 0 25px #8ab4ff;
+header img{height:56px;transition: transform .3s;}
+header img:hover{transform:rotate(-5deg);}
+nav a{
+  margin-left:18px;color:#fff;text-decoration:none;font-weight:600;
+  transition:color .3s, transform .3s;position:relative;
 }
+nav a:hover{color:#8ab4ff;transform:scale(1.05);}
+nav a::after{
+  content:"✦";position:absolute;opacity:0;top:-10px;right:-10px;color:#8ab4ff;
+  transition:all .3s;
+}
+nav a:hover::after{opacity:1;transform:rotate(20deg);}
+@media(max-width:768px){
+  header{flex-direction:column;}
+  nav a{margin:8px 0 0;}
+}
+
+/* ==================================================== */
+/* HERO SECTION */
+/* ==================================================== */
+.hero{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;min-height:80vh;padding:28px;overflow:hidden;
+  animation:heroFade 2s ease-in-out;
+}
+@keyframes heroFade{0%{opacity:0;transform:translateY(50px);}100%{opacity:1;transform:translateY(0);}}
+.hero h1,.hero p{
+  font-family:"Caveat Brush",cursive;font-weight:400;font-style:normal;margin-bottom:12px;
+}
+.hero h1{font-size:clamp(28px,6vw,64px);}
+.hero p{color:#ccc;margin-bottom:18px;font-size:1.5rem;letter-spacing:0.5px;}
+.btn-subscribe{
+  padding:10px 20px;background:#8ab4ff;color:#000;
+  border-radius:12px;border:none;font-weight:700;cursor:pointer;
+  transition: transform .3s, background .3s, box-shadow .3s;
+}
+.btn-subscribe:hover{
+  transform: scale(1.1) rotate(-1deg);
+  background:#6fa0ff;
+  box-shadow:0 0 20px #8ab4ff;
+}
+
+/* ==================================================== */
+/* SECTIONS & GLASS EFFECT */
+/* ==================================================== */
 section{
-  padding:50px 20px;
-  opacity:0;
-  transform:translateY(40px);
-  transition:opacity 1s,transform 1s;
+  padding:48px 20px;opacity:0;transform:translateY(50px);
+  transition:opacity 1s, transform 1s;position:relative;
 }
 section.visible{opacity:1;transform:translateY(0);}
-section h2{
-  text-align:center;
-  font-family:"Caveat Brush",cursive;
-  font-size:36px;
-  margin-bottom:20px;
-}
+section h2{text-align:center;font-size:32px;margin-bottom:18px;font-family:"Caveat Brush",cursive;}
+section p{color:#ccc;text-align:center;max-width:900px;margin:0 auto 36px;line-height:1.6;}
 .glass{
-  background:rgba(0,0,0,.5);
-  backdrop-filter:blur(10px);
-  border-radius:18px;
-  padding:28px;
-  max-width:1000px;
-  margin:0 auto 40px;
-  box-shadow:0 0 25px rgba(138,180,255,.3);
-  border:1px solid rgba(138,180,255,.2);
+  background:rgba(0,0,0,.45);backdrop-filter:blur(8px);
+  border-radius:16px;padding:26px;max-width:1000px;margin:0 auto;
+  box-shadow:0 0 20px rgba(138,180,255,0.3);
 }
+.divider{
+  width:100%;height:4px;
+  background:linear-gradient(to right,#8ab4ff,transparent,#8ab4ff);
+  margin:40px 0;border-radius:4px;
+  animation:dividerAnim 3s ease-in-out infinite alternate;
+}
+@keyframes dividerAnim{0%{opacity:0.5;}100%{opacity:1;}}
+
+/* ==================================================== */
+/* GALLERY STYLING */
+/* ==================================================== */
 .gallery{
-  position:relative;
-  max-width:1000px;
-  height:560px;
-  margin:0 auto;
-  border-radius:22px;
-  overflow:hidden;
-  background:rgba(0,0,0,.3);
-  box-shadow:0 0 30px rgba(138,180,255,.25);
+  position:relative;max-width:1000px;height:520px;margin:0 auto;
+  border-radius:20px;overflow:hidden;display:flex;
+  align-items:center;justify-content:center;background:rgba(0,0,0,.25);
+  perspective:600px;box-shadow:0 0 20px rgba(138,180,255,0.2);
 }
 .gallery img{
-  position:absolute;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  opacity:0;
-  transition:opacity 1s ease;
+  position:absolute;width:100%;height:100%;object-fit:cover;
+  border-radius:20px;opacity:0;transition:opacity 1s ease, transform 1s ease, box-shadow 0.5s;
+  transform: scale(1.1);z-index:0;
 }
-.gallery img.active{opacity:1;}
-.arrow{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  font-size:42px;
-  color:#fff;
-  background:rgba(0,0,0,.4);
-  padding:10px;
-  border-radius:50%;
-  cursor:pointer;
-  user-select:none;
+.gallery img.active{
+  opacity:1;transform: scale(1) rotateY(0deg);z-index:1;
+  box-shadow:0 0 20px #8ab4ff;
 }
-.arrow.left{left:18px;}
-.arrow.right{right:18px;}
+.gallery img:hover{transform:scale(1.05) rotateY(1deg);box-shadow:0 0 25px #8ab4ff;}
+.gallery .arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  font-size:40px;color:#fff;cursor:pointer;
+  background:rgba(0,0,0,0.3);padding:8px;border-radius:50%;
+  user-select:none;transition: background .3s, transform .3s;
+}
+.gallery .arrow:hover{background:rgba(0,0,0,0.5);transform:translateY(-50%) scale(1.1);}
+.gallery .arrow.left{left:20px;} .gallery .arrow.right{right:20px;}
 .thumbnails{
-  display:flex;
-  overflow-x:auto;
-  gap:10px;
-  padding:10px 0;
-  max-width:1000px;
-  margin:15px auto 0;
+  display:flex;overflow-x:auto;margin:12px auto 0;max-width:1000px;
+  gap:8px;padding-bottom:6px;
 }
 .thumbnails img{
-  width:90px;
-  height:68px;
-  object-fit:cover;
-  border-radius:10px;
-  cursor:pointer;
-  opacity:0.65;
-  transition:opacity .3s;
-  border:2px solid transparent;
+  width:80px;height:60px;object-fit:cover;border-radius:8px;
+  cursor:pointer;opacity:0.6;transition:opacity .3s, transform .3s, box-shadow .3s;
 }
 .thumbnails img.active-thumb{
-  opacity:1;
-  border:2px solid #8ab4ff;
+  opacity:1;border:2px solid #8ab4ff;transform:scale(1.05);box-shadow:0 0 10px #8ab4ff;
 }
-#contact-glass{
-  padding:40px 30px;
-  border-radius:20px;
-  background:rgba(0,0,0,0.55);
-  backdrop-filter:blur(12px);
-  box-shadow:0 0 35px rgba(138,180,255,0.35);
-  transition: all .4s ease;
+.thumbnails img:hover{opacity:1;transform:scale(1.05);}
+
+/* ==================================================== */
+/* CONTACT FORM */
+/* ==================================================== */
+.contact-form{
+  display:flex;flex-direction:column;max-width:600px;margin:0 auto;
 }
-#contact-glass:hover{
-  transform:translateY(-8px);
-  box-shadow:0 0 55px rgba(138,180,255,0.55);
+.contact-form input,.contact-form textarea{
+  margin-bottom:14px;padding:12px;border-radius:10px;border:none;
+  background:rgba(255,255,255,.08);color:#fff;transition: background .3s, transform .3s;
 }
-#contact-glass input,
-#contact-glass textarea{
-  width:100%;
-  padding:14px;
-  margin-bottom:16px;
-  border-radius:12px;
-  border:none;
-  background:rgba(255,255,255,0.1);
-  color:#fff;
-  font-size:1rem;
-  transition:all .3s;
+.contact-form input:focus,.contact-form textarea:focus{
+  background:rgba(255,255,255,.15);outline:none;transform:scale(1.02);
 }
-#contact-glass input:focus,
-#contact-glass textarea:focus{
-  background:rgba(255,255,255,0.18);
+.contact-form button{
+  padding:12px;background:#8ab4ff;border:none;border-radius:10px;
+  font-weight:700;cursor:pointer;transition: background .3s, transform .3s, box-shadow .3s;
+}
+.contact-form button:hover{
+  background:#6fa0ff;transform: scale(1.05);
   box-shadow:0 0 15px #8ab4ff;
-  outline:none;
 }
-#contact-glass button{
-  padding:14px 30px;
-  background:#8ab4ff;
-  border:none;
-  border-radius:12px;
-  font-weight:700;
-  cursor:pointer;
-  transition:all .3s;
+
+/* ==================================================== */
+/* FOOTER */
+/* ==================================================== */
+footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
+
+/* ==================================================== */
+/* MEDIA QUERIES */
+/* ==================================================== */
+@media(max-width:768px){
+  .gallery{height:320px;}
+  .hero p{font-size:1.2rem;}
 }
-#contact-glass button:hover{
-  transform:scale(1.06);
-  background:#6fa0ff;
-  box-shadow:0 0 25px #8ab4ff;
+@media(max-width:480px){
+  nav a{margin:6px 0;}
+  .thumbnails img{width:60px;height:45px;}
 }
-.form-success{
-  display:none;
-  color:#8ab4ff;
-  text-align:center;
-  margin-top:15px;
-  font-weight:700;
-  font-family:'Caveat Brush',cursive;
-  font-size:1.3rem;
+
+/* ==================================================== */
+/* EXTRA EFFECTS */
+/* ==================================================== */
+.glow-text{
+  color:#8ab4ff;text-shadow:0 0 10px #8ab4ff,0 0 20px #8ab4ff;
+  animation:glow 2s infinite alternate;
 }
-footer{
-  text-align:center;
-  padding:20px;
-  background:rgba(0,0,0,.7);
-  color:#aaa;
-  font-size:14px;
+@keyframes glow{0%{text-shadow:0 0 10px #8ab4ff;}50%{text-shadow:0 0 20px #6fa0ff;}100%{text-shadow:0 0 10px #8ab4ff;}}
+
+/* ==================================================== */
+/* ADDITIONAL FLOATING COMETS */
+/* ==================================================== */
+.comet{
+  position:absolute;width:2px;height:60px;background:linear-gradient(white,transparent);
+  opacity:0.8;top:10%;left:0;transform:rotate(45deg);
+  animation:cometMove 5s linear infinite;
 }
-.stars div,
-.particles div{
-  position:absolute;
-  background:#fff;
-  border-radius:50%;
+@keyframes cometMove{
+  0%{transform:translateX(0) rotate(45deg);}
+  100%{transform:translateX(120vw) rotate(45deg);}
 }
-.fade-up{opacity:0;transform:translateY(30px);transition:opacity 1s,transform 1s;}
-.fade-up.visible{opacity:1;transform:translateY(0);}
 </style>
 </head>
 <body>
 
-<div class="stars" id="stars"></div>
-<div class="particles" id="particles"></div>
+<!-- Background Effects -->
+<div class="stars"></div>
+<div class="shooting-star"></div>
+<div class="particles"></div>
+<div class="nebula"><canvas id="nebula-canvas"></canvas></div>
+<div class="comet"></div>
 
 <header>
-  <img src="assets/2.png" alt="ZTA Logo">
+  <img src="assets/logo.png" alt="ZTA Logo">
   <nav>
     <a href="#home">Home</a>
     <a href="#about">About</a>
@@ -238,159 +263,175 @@ footer{
 </header>
 
 <section class="hero" id="home">
-  <h1 class="fade-up">ZTA</h1>
-  <p class="fade-up">Capturing the Cosmos, One Frame at a Time</p>
-  <a href="https://youtube.com/@zta" target="_blank" class="btn fade-up">Subscribe on YouTube</a>
+  <h1 class="glow-text" id="hero-title"></h1>
+  <p class="glow-text" id="hero-subtitle"></p>
+  <a href="https://youtube.com/@zta" target="_blank">
+    <button class="btn-subscribe">Subscribe</button>
+  </a>
 </section>
 
+<div class="divider"></div>
+
 <section id="about">
-  <div class="glass fade-up">
+  <div class="glass">
     <h2>About ZTA</h2>
-    <p>ZTA is a passionate astrophotography journey through galaxies, nebulae, and deep-space wonders. From backyard telescopes to remote dark-sky expeditions, every image tells a story of light, time, and the universe.</p>
+    <p>ZTA is a YouTube channel dedicated to capturing the beauty of the night sky.
+       From breathtaking galaxies to stunning lunar shots, we explore astrophotography like never before.</p>
   </div>
 </section>
 
+<div class="divider"></div>
+
 <section id="gallery">
-  <h2 class="fade-up">Gallery</h2>
+  <h2>Gallery</h2>
   <div class="gallery" id="gallery-container">
-    <div class="arrow left">Left</div>
-    <div class="arrow right">Right</div>
+    <p>Loading gallery...</p>
+    <div class="arrow left">&#10094;</div>
+    <div class="arrow right">&#10095;</div>
   </div>
   <div class="thumbnails" id="gallery-thumbnails"></div>
 </section>
 
+<div class="divider"></div>
+
 <section id="contact">
-  <h2 class="fade-up">Contact</h2>
-  <div class="glass" id="contact-glass">
-    <form id="contactForm" action="https://formspree.io/f/meopyjgn" method="POST">
+  <h2>Contact</h2>
+  <div class="contact-form glass">
+    <form action="https://formspree.io/f/meopyjgn" method="POST">
       <input type="text" name="name" placeholder="Your Name" required>
       <input type="email" name="email" placeholder="Your Email" required>
       <textarea rows="5" name="message" placeholder="Your Message" required></textarea>
       <button type="submit">Send Message</button>
     </form>
-    <div class="form-success" id="formSuccess">Thank You! Message Sent.</div>
   </div>
 </section>
 
-<!-- 150+ GLASS CONTENT SECTIONS (Astrophysics-Themed) -->
-<section><div class="glass fade-up"><h2>Milky Way Core</h2><p>4-hour integration under Bortle 2 skies in the Swiss Alps.</p></div></section>
-<section><div class="glass fade-up"><h2>Andromeda Galaxy</h2><p>M31: 2.5 million light-years, 600mm refractor, 8-hour stack.</p></div></section>
-<section><div class="glass fade-up"><h2>Orion Nebula</h2><p>M42 in HaRGB, 3nm narrowband, 5-hour total exposure.</p></div></section>
-<section><div class="glass fade-up"><h2>Pleiades</h2><p>M45 blue reflection nebula, 200mm lens, 2-hour mosaic.</p></div></section>
-<section><div class="glass fade-up"><h2>Jupiter</h2><p>Great Red Spot, Io transit, 500-frame lucky imaging.</p></div></section>
-<section><div class="glass fade-up"><h2>Saturn</h2><p>Cassini Division, Encke Gap, 1000-frame stack.</p></div></section>
-<section><div class="glass fade-up"><h2>Heart Nebula</h2><p>IC 1805 in Ha+OIII, 10-hour dual-band.</p></div></section>
-<section><div class="glass fade-up"><h2>Veil Nebula</h2><p>Cygnus Loop supernova remnant, OIII dominant.</p></div></section>
-<section><div class="glass fade-up"><h2>North America Nebula</h2><p>NGC 7000 in broadband + Ha blend.</p></div></section>
-<section><div class="glass fade-up"><h2>Lagoon Nebula</h2><p>M8 with NGC 6530 cluster, 4-hour RGB.</p></div></section>
-<section><div class="glass fade-up"><h2>Trifid Nebula</h2><p>M20: emission, reflection, dark lanes.</p></div></section>
-<section><div class="glass fade-up"><h2>Eagle Nebula</h2><p>Pillars of Creation, 3nm Ha detail.</p></div></section>
-<section><div class="glass fade-up"><h2>Whirlpool Galaxy</h2><p>M51 + NGC 5195 interaction, 12-hour LRGB.</p></div></section>
-<section><div class="glass fade-up"><h2>Pinwheel Galaxy</h2><p>M101 face-on spiral, 10-hour integration.</p></div></section>
-<section><div class="glass fade-up"><h2>Sombrero Galaxy</h2><p>M104 dust lane, 8-hour LRGB.</p></div></section>
-<section><div class="glass fade-up"><h2>Ring Nebula</h2><p>M57 planetary in Lyra, OIII core glow.</p></div></section>
-<section><div class="glass fade-up"><h2>Dumbbell Nebula</h2><p>M27 in Ha+OIII, bipolar structure.</p></div></section>
-<section><div class="glass fade-up"><h2>Carina Nebula</h2><p>Eta Carinae, Keyhole, 6-hour mosaic.</p></div></section>
-<section><div class="glass fade-up"><h2>Horsehead Nebula</h2><p>B33 in IC 434, Ha-enhanced.</p></div></section>
-<section><div class="glass fade-up"><h2>California Nebula</h2><p>NGC 1499 in Perseus, 5-hour HaRGB.</p></div></section>
-<section><div class="glass fade-up"><h2>Rosette Nebula</h2><p>NGC 2237, central cluster NGC 2244.</p></div></section>
-<section><div class="glass fade-up"><h2>Bubble Nebula</h2><p>NGC 7635, Wolf-Rayet star bubble.</p></div></section>
-<section><div class="glass fade-up"><h2>Crescent Nebula</h2><p>NGC 6888 in Cygnus, shockwave shell.</p></div></section>
-<section><div class="glass fade-up"><h2>Elephant’s Trunk</h2><p>IC 1396 dark globule, star formation.</p></div></section>
-<section><div class="glass fade-up"><h2>Hercules Cluster</h2><p>M13 globular, 300,000 stars resolved.</p></div></section>
-<section><div class="glass fade-up"><h2>Omega Centauri</h2><p>NGC 5139, 10 million stars.</p></div></section>
-<section><div class="glass fade-up"><h2>Double Cluster</h2><p>NGC 869 & 884 in Perseus.</p></div></section>
-<section><div class="glass fade-up"><h2>Beehive Cluster</h2><p>M44 open cluster in Cancer.</p></div></section>
-<section><div class="glass fade-up"><h2>Comet NEOWISE</h2><p>C/2020 F3, 15° tail in July 2020.</p></div></section>
-<section><div class="glass fade-up"><h2>Moon Eclipse</h2><p>Total lunar eclipse, blood moon phase.</p></div></section>
-<section><div class="glass fade-up"><h2>ISS Transit</h2><p>International Space Station over Sun.</p></div></section>
-<section><div class="glass fade-up"><h2>Star Trails</h2><p>3-hour circumpolar trails, Big Dipper.</p></div></section>
-<section><div class="glass fade-up"><h2>Meteor Shower</h2><p>Perseids 2024, 50+ meteors captured.</p></div></section>
-<section><div class="glass fade-up"><h2>Aurora Borealis</h2><p>Kp7 storm, green curtains over lake.</p></div></section>
-<section><div class="glass fade-up"><h2>Deep Sky Mosaic</h2><p>Cygnus Wall 3-panel, 15 hours total.</p></div></section>
-<section><div class="glass fade-up"><h2>Planetary Conjunction</h2><p>Jupiter-Saturn 0.1° apart, Dec 2020.</p></div></section>
-<section><div class="glass fade-up"><h2>Supernova Remnant</h2><p>Cygnus Loop in OIII, 12-hour narrowband.</p></div></section>
-<section><div class="glass fade-up"><h2>Dark Nebula</h2><p>Barnard 33 silhouette in Ha.</p></div></section>
-<section><div class="glass fade-up"><h2>Reflection Nebula</h2><p>M78 in Orion, blue scattered light.</p></div></section>
-<section><div class="glass fade-up"><h2>Emission Nebula</h2><p>IC 1805 Heart in Ha, red glow.</p></div></section>
-<section><div class="glass fade-up"><h2>Globular Cluster</h2><p>M4 near Antares, core resolved.</p></div></section>
-<section><div class="glass fade-up"><h2>Open Cluster</h2><p>NGC 7789 Caroline’s Rose.</p></div></section>
-<section><div class="glass fade-up"><h2>Galactic Center</h2><p>Sagittarius A* region, IR-piercing.</p></div></section>
-<section><div class="glass fade-up"><h2>Zenith Starfield</h2><p>100° FOV, 30-second exposure.</p></div></section>
-<section><div class="glass fade-up"><h2>Milky Way Panorama</h2><p>180° stitch, 12 vertical frames.</p></div></section>
-<section><div class="glass fade-up"><h2>Light Pollution Map</h2><p>Bortle scale comparison, city vs dark site.</p></div></section>
-<section><div class="glass fade-up"><h2>Telescope Setup</h2><p>8" RC, EQ6-R, ZWO ASI6200MM.</p></div></section>
-<section><div class="glass fade-up"><h2>Image Processing</h2><p>PI workflow: calibration, stacking, deconvolution.</p></div></section>
-<section><div class="glass fade-up"><h2>Filter Wheel</h2><p>LRGB + 3nm Ha/OIII/SII set.</p></div></section>
-<section><div class="glass fade-up"><h2>Guiding RMS</h2><p>0.4" total, PHD2 multistar.</p></div></section>
-<section><div class="glass fade-up"><h2>Flat Frames</h2><p>Electroluminescent panel, 100 flats per filter.</p></div></section>
-<section><div class="glass fade-up"><h2>Dark Frames</h2><p>50 darks at -10°C, matched bias.</p></div></section>
-<section><div class="glass fade-up"><h2>Star Alignment</h2><p>Dynamic alignment, drizzle 1.5x.</p></div></section>
-<section><div class="glass fade-up"><h2>Noise Reduction</h2><p>NVIDIA Denoise AI + MURE.</p></div></section>
-<section><div class="glass fade-up"><h2>Color Calibration</h2><p>SPCC in PixInsight, G2V reference.</p></div></section>
-<section><div class="glass fade-up"><h2>Star Debloating</h2><p>StarXTerminator + manual mask.</p></div></section>
-<section><div class="glass fade-up"><h2>Contrast Stretch</h2><p>Arcsinh + HistogramTransformation.</p></div></section>
-<section><div class="glass fade-up"><h2>Sharpening</h2><p>Multiscale Linear Transform, edge mask.</p></div></section>
-<section><div class="glass fade-up"><h2>Final Crop</h2><p>4:3 ratio, 8000x6000 output.</p></div></section>
-<section><div class="glass fade-up"><h2>Export Settings</h2><p>16-bit TIFF, sRGB, 95% JPEG.</p></div></section>
-<section><div class="glass fade-up"><h2>APOY Entry</h2><p>Astronomy Photographer of the Year 2025.</p></div></section>
-<section><div class="glass fade-up"><h2>DeepSkyWest</h2><p>Remote observatory in New Mexico.</p></div></section>
-<section><div class="glass fade-up"><h2>iTelescope</h2><p>T17 0.43m CDK in Spain.</p></div></section>
-<section><div class="glass fade-up"><h2>Stellarvue SVX152T</h2><p>152mm triplet APO, f/8.</p></div></section>
-<section><div class="glass fade-up"><h2>ZWO ASI6200MM Pro</h2><p>Full-frame monochrome, 3.76µm pixels.</p></div></section>
-<section><div class="glass fade-up"><h2>EQ8-R Pro</h2><p>40kg payload, belt-driven.</p></div></section>
-<section><div class="glass fade-up"><h2>N.I.N.A.</h2><p>Nightly Imaging ‘N’ Astronomy sequencer.</p></div></section>
-<section><div class="glass fade-up"><h2>SGP</h2><p>Sequence Generator Pro automation.</p></div></section>
-<section><div class="glass fade-up"><h2>PixInsight</h2><p>Advanced post-processing suite.</p></div></section>
-<section><div class="glass fade-up"><h2>Photoshop</h2><p>Final touch-up, watermark, resize.</p></div></section>
-<section><div class="glass fade-up"><h2>YouTube Channel</h2><p>@zta - 50K+ subscribers.</p></div></section>
-<section><div class="glass fade-up"><h2>Instagram</h2><p>@zta.astrophoto - daily posts.</p></div></section>
-<section><div class="glass fade-up"><h2>Patreon</h2><p>Exclusive raw data, tutorials.</p></div></section>
-<section><div class="glass fade-up"><h2>Print Shop</h2><p>Fine art metal prints, 24x36.</p></div></section>
-<section><div class="glass fade-up"><h2>Workshops</h2><p>Dark sky imaging retreats.</p></div></section>
-<section><div class="glass fade-up"><h2>Guest Speaker</h2><p>NEAF, AAS, local astro clubs.</p></div></section>
-<section><div class="glass fade-up"><h2>Awards</h2><p>APOY Runner-up 2024, TWAN featured.</p></div></section>
-<section><div class="glass fade-up"><h2>Collaborations</h2><p>With NASA, ESA, NOIRLab.</p></div></section>
-<section><div class="glass fade-up"><h2>Public Outreach</h2><p>Star parties, school talks.</p></div></section>
-<section><div class="glass fade-up"><h2>Light Pollution Advocacy</h2><p>IDA member, dark sky preservation.</p></div></section>
-<section><div class="glass fade-up"><h2>Future Plans</h2><p>Chile remote observatory 2026.</p></div></section>
-<section><div class="glass fade-up"><h2>JWST Data</h2><p>Public archive M51, Carina.</p></div></section>
-<section><div class="glass fade-up"><h2>Hubble Legacy</h2><p>Reprocessing classic fields.</p></div></section>
-<section><div class="glass fade-up"><h2>Citizen Science</h2><p>Zooniverse galaxy classification.</p></div></section>
-<section><div class="glass fade-up"><h2>Exoplanet Transit</h2><p>Photometry of WASP-12b.</p></div></section>
-<section><div class="glass fade-up"><h2>Variable Stars</h2><p>AAVSO submissions, RR Lyrae.</p></div></section>
-<section><div class="glass fade-up"><h2>Occultations</h2><p>Asteroid shadow timing.</p></div></section>
-<section><div class="glass fade-up"><h2>Spectra</h2><p>Low-res stellar classification.</p></div></section>
-<section><div class="glass fade-up"><h2>Radio Astronomy</h2><p>21cm hydrogen line with RTL-SDR.</p></div></section>
-<section><div class="glass fade-up"><h2>Gamma Rays</h2><p>Fermi LAT all-sky map.</p></div></section>
-<section><div class="glass fade-up"><h2>Gravitational Waves</h2><p>LIGO event visualization.</p></div></section>
-<section><div class="glass fade-up"><h2>Black Hole Imaging</h2><p>M87* EHT reconstruction.</p></div></section>
-<section><div class="glass fade-up"><h2>Sag A* Image</h2><p>Milky Way center black hole.</p></div></section>
-<section><div class="glass fade-up"><h2>Cosmic Microwave Background</h2><p>Planck CMB map, temperature fluctuations.</p></div></section>
-<section><div class="glass fade-up"><h2>Dark Matter Map</h2><p>Weak lensing from DES.</p></div></section>
-<section><div class="glass fade-up"><h2>Baryon Acoustic Oscillations</h2><p>SDSS BAO ruler.</p></div></section>
-<section><div class="glass fade-up"><h2>Hubble Tension</h2><p>H0 discrepancy debate.</p></div></section>
-<section><div class="glass fade-up"><h2>Early Dark Energy</h2><p>Possible H0 solution.</p></div></section>
-<section><div class="glass fade-up"><h2>Reionization</h2><p>First stars at z=10+.</p></div></section>
-<section><div class="glass fade-up"><h2>JWST First Light</h2><p>SMACS 0723 deep field.</p></div></section>
-<section><div class="glass fade-up"><h2>High-z Galaxies</h2><p>z=13+ candidates.</p></div></section>
-<section><div class="glass fade-up"><h2>James Webb</h2><p>6.5m mirror, NIRCam, MIRI.</p></div></section>
-<section><div class="glass fade-up"><h2>Nancy Roman</h2><p>Future wide-field infrared.</p></div></section>
-<section><div class="glass fade-up"><h2>Euclid Mission</h2><p>Dark energy, weak lensing.</p></div></section>
-<section><div class="glass fade-up"><h2>Vera Rubin</h2><p>LSST 10-year survey.</p></div></section>
-<section><div class="glass fade-up"><h2>SKA</h2><p>Square Kilometre Array radio.</p></div></section>
-<section><div class="glass fade-up"><h2>CTA</h2><p>Cherenkov Telescope Array.</p></div></section>
-<section><div class="glass fade-up"><h2>LISA</h2><p>Space-based GW detector.</p></div></section>
-<section><div class="glass fade-up"><h2>Neutron Star Merger</h2><p>GW170817 kilonova.</p></div></section>
-<section><div class="glass fade-up"><h2>Fast Radio Bursts</h2><p>CHIME detections, magnetars.</p></div></section>
-<section><div class="glass fade-up"><h2>Pulsar Timing</h2><p>NANOGrav GW background.</p></div></section>
-<section><div class="glass fade-up"><h2>Cosmic Rays</h2><p>Pierre Auger Observatory.</p></div></section>
-<section><div class="glass fade-up"><h2>Neutrinos</h2><p>IceCube high-energy events.</p></div></section>
-<section><div class="glass fade-up"><h2>Multimessenger</h2><p>Joint GW+EM observations.</p></div></section>
-<section><div class="glass fade-up"><h2>Space Weather</h2><p>Solar flares, CME impact.</p></div></section>
-<section><div class="glass fade-up"><h2>Exoplanets</h2><p>TESS, Kepler, JWST transits.</p></div></section>
-<section><div class="glass fade-up"><h2>TRAPPIST-1</h2><p>7 Earth-sized planets.</p></div></section>
-<section><div class="glass fade-up"><h2>Proxima b</h2><p>Nearest exoplanet, 4.2 ly.</p></div></section>
-<section><div class="glass fade-up"><h2>Biosignatures</h2><p>Phosphine in Venus, methane on Mars.</p></div></section>
-<section><div class="glass fade-up"><h2>Technosignatures</h2><p>SETI, Breakthrough Listen.</p></div></section>
-<section><div class="glass fade-up
+<footer>&copy; 2025 ZTA | All Rights Reserved</footer>
+
+<script>
+/* ===================================== */
+/* HERO TYPING ANIMATION */
+/* ===================================== */
+const heroTitle="ZTA", heroSubtitle="Exploring the Universe Through My Lens";
+let i=0,j=0;
+function typeWriter(){
+  if(i<heroTitle.length){document.getElementById('hero-title').innerHTML+=heroTitle.charAt(i);i++;setTimeout(typeWriter,150);}
+  else if(j<heroSubtitle.length){document.getElementById('hero-subtitle').innerHTML+=heroSubtitle.charAt(j);j++;setTimeout(typeWriter,50);}
+}
+typeWriter();
+
+/* ===================================== */
+/* SECTION REVEAL ON SCROLL */
+/* ===================================== */
+const sections=document.querySelectorAll('section');
+window.addEventListener('scroll',()=>{
+  sections.forEach(section=>{
+    if(section.getBoundingClientRect().top < window.innerHeight-100)
+      section.classList.add('visible');
+  });
+});
+
+/* ===================================== */
+/* STARS, PARTICLES & SHOOTING STARS */
+/* ===================================== */
+const starsContainer=document.querySelector('.stars');
+for(let i=0;i<100;i++){
+  const star=document.createElement('div');
+  star.className='star';
+  star.style.width=star.style.height=Math.random()*2+1+'px';
+  star.style.top=Math.random()*100+'%';
+  star.style.left=Math.random()*100+'%';
+  star.style.animationDuration=(Math.random()*3+2)+'s';
+  starsContainer.appendChild(star);
+}
+
+const particlesContainer=document.querySelector('.particles');
+for(let i=0;i<150;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  p.style.top=Math.random()*100+'%';
+  p.style.left=Math.random()*100+'%';
+  p.style.width=p.style.height=Math.random()*2+1+'px';
+  particlesContainer.appendChild(p);
+}
+
+const shootingContainer=document.querySelector('.shooting-star');
+function createShootingStar(){
+  const star=document.createElement('div');
+  star.style.top=Math.random()*50+'%';
+  star.style.left='-10%';
+  shootingContainer.appendChild(star);
+  star.animate([{transform:'translateX(0)'},{transform:'translateX(120vw)'}],{duration:3000,easing:'linear'});
+  setTimeout(()=>star.remove(),3000);
+}
+setInterval(createShootingStar,4000);
+
+/* ===================================== */
+/* GALLERY LOADER & SLIDESHOW */
+/* ===================================== */
+(async function(){
+  const container=document.getElementById('gallery-container');
+  const thumbsContainer=document.getElementById('gallery-thumbnails');
+  const loadingText=container.querySelector('p');
+  const folder='assets/gallery/',ext='.jpg',maxTry=50,slideTime=4000;
+  let imgs=[],thumbs=[];
+  for(let i=1;i<=maxTry;i++){
+    const url=folder+i+ext;
+    const ok=await new Promise(res=>{
+      const im=new Image();
+      im.onload=()=>res(true);
+      im.onerror=()=>res(false);
+      im.src=url;
+    });
+    if(ok){
+      const el=document.createElement('img');
+      el.src=url;el.alt='Gallery Image '+i;
+      container.appendChild(el);imgs.push(el);
+      const th=document.createElement('img');th.src=url;thumbsContainer.appendChild(th);thumbs.push(th);
+    }
+  }
+  if(loadingText) loadingText.remove();
+  if(imgs.length===0){container.innerHTML='<p>No images found</p>';return;}
+  let index=0;imgs[index].classList.add('active');thumbs[index].classList.add('active-thumb');
+  const showImage=i=>{imgs.forEach(img=>img.classList.remove('active'));thumbs.forEach(thumb=>thumb.classList.remove('active-thumb'));imgs[i].classList.add('active');thumbs[i].classList.add('active-thumb');index=i;}
+  let autoSlide=setInterval(()=>{index=(index+1)%imgs.length;showImage(index);},slideTime);
+  container.querySelector('.arrow.left').addEventListener('click',()=>{clearInterval(autoSlide);index=(index-1+imgs.length)%imgs.length;showImage(index);autoSlide=setInterval(()=>{index=(index+1)%imgs.length;showImage(index);},slideTime);});
+  container.querySelector('.arrow.right').addEventListener('click',()=>{clearInterval(autoSlide);index=(index+1)%imgs.length;showImage(index);autoSlide=setInterval(()=>{index=(index+1)%imgs.length;showImage(index);},slideTime);});
+  thumbs.forEach((thumb,i)=>{thumb.addEventListener('click',()=>{clearInterval(autoSlide);showImage(i);autoSlide=setInterval(()=>{index=(index+1)%imgs.length;showImage(index);},slideTime);});});
+})();
+
+/* ===================================== */
+/* NEBULA CANVAS ANIMATION */
+/* ===================================== */
+const nebulaCanvas=document.getElementById('nebula-canvas');
+const nctx=nebulaCanvas.getContext('2d');
+function resizeCanvas(){nebulaCanvas.width=window.innerWidth;nebulaCanvas.height=window.innerHeight;}
+resizeCanvas();window.addEventListener('resize',resizeCanvas);
+let particlesArr=[];
+for(let i=0;i<200;i++){particlesArr.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,radius:Math.random()*2+1,speedX:(Math.random()-0.5)*0.2,speedY:(Math.random()-0.5)*0.2});}
+function animateNebula(){
+  nctx.clearRect(0,0,nebulaCanvas.width,nebulaCanvas.height);
+  particlesArr.forEach(p=>{
+    nctx.beginPath();nctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
+    nctx.fillStyle='rgba(138,180,255,0.3)';nctx.fill();
+    p.x+=p.speedX;p.y+=p.speedY;
+    if(p.x<0)p.x=nebulaCanvas.width;if(p.x>nebulaCanvas.width)p.x=0;
+    if(p.y<0)p.y=nebulaCanvas.height;if(p.y>nebulaCanvas.height)p.y=0;
+  });
+  requestAnimationFrame(animateNebula);
+}
+animateNebula();
+
+/* ===================================== */
+/* PARALLAX SCROLL EFFECT */
+/* ===================================== */
+window.addEventListener('scroll',()=>{
+  const scrollY=window.scrollY;
+  document.querySelector('.stars').style.transform=`translateY(${scrollY*0.05}px)`;
+  document.querySelector('.particles').style.transform=`translateY(${scrollY*0.03}px)`;
+  document.querySelector('.nebula').style.transform=`translateY(${scrollY*0.02}px)`;
+  document.querySelectorAll('.gallery img').forEach(img=>img.style.transform=`translateY(${scrollY*0.01}px)`);
+});
+</script>
+</body>
+</html>
