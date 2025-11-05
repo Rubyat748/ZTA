@@ -18,25 +18,14 @@
 body{
   font-family:'Segoe UI',Roboto,sans-serif;
   color:#fff;
+  background:#000;
   overflow-x:hidden;
   scroll-behavior:smooth;
   perspective:1000px;
 }
 
 /* ==================================================== */
-/* BACKGROUND & ANIMATED NEBULA */
-/* ==================================================== */
-body::before{
-  content:"";
-  position:fixed;
-  top:0;left:0;
-  width:100%;height:100%;
-  z-index:-6;
-}
-body{background:#000;}
-
-/* ==================================================== */
-/* STARS, PARTICLES, SHOOTING STARS */
+/* STARS, PARTICLES, SHOOTING STARS, NEBULA */
 /* ==================================================== */
 .stars, .shooting-star, .particles, .nebula{
   position:fixed;top:0;left:0;width:100%;height:100%;
@@ -269,7 +258,7 @@ footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
   <div class="glass">
     <h2>About ZTA</h2>
     <p>ZTA is a YouTube channel dedicated to capturing the beauty of the night sky.
-       From breathtaking galaxies to stunning lunar shots, we explore astrophotography like never before.</p>
+         From breathtaking galaxies to stunning lunar shots, we explore astrophotography like never before.</p>
   </div>
 </section>
 
@@ -304,7 +293,6 @@ footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
 <script>
 /* ===================================== */
 /* HERO TYPING ANIMATION */
-/* ===================================== */
 const heroTitle="ZTA", heroSubtitle="Exploring the Universe Through My Lens";
 let i=0,j=0;
 function typeWriter(){
@@ -315,7 +303,6 @@ typeWriter();
 
 /* ===================================== */
 /* SECTION REVEAL ON SCROLL */
-/* ===================================== */
 const sections=document.querySelectorAll('section');
 window.addEventListener('scroll',()=>{
   sections.forEach(section=>{
@@ -326,7 +313,6 @@ window.addEventListener('scroll',()=>{
 
 /* ===================================== */
 /* STARS, PARTICLES & SHOOTING STARS */
-/* ===================================== */
 const starsContainer=document.querySelector('.stars');
 for(let i=0;i<100;i++){
   const star=document.createElement('div');
@@ -361,7 +347,6 @@ setInterval(createShootingStar,4000);
 
 /* ===================================== */
 /* GALLERY LOADER & SLIDESHOW */
-/* ===================================== */
 (async function(){
   const container=document.getElementById('gallery-container');
   const thumbsContainer=document.getElementById('gallery-thumbnails');
@@ -395,7 +380,6 @@ setInterval(createShootingStar,4000);
 
 /* ===================================== */
 /* NEBULA CANVAS ANIMATION */
-/* ===================================== */
 const nebulaCanvas=document.getElementById('nebula-canvas');
 const nctx=nebulaCanvas.getContext('2d');
 function resizeCanvas(){nebulaCanvas.width=window.innerWidth;nebulaCanvas.height=window.innerHeight;}
@@ -416,8 +400,7 @@ function animateNebula(){
 animateNebula();
 
 /* ===================================== */
-/* PARALLAX SCROLL EFFECT & BACKGROUND FIX */
-/* ===================================== */
+/* BACKGROUND DIV & PARALLAX */
 const bg = document.createElement('div');
 bg.style.position = 'fixed';
 bg.style.top = 0;
