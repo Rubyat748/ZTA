@@ -105,22 +105,45 @@ section p{color:#ccc;text-align:center;max-width:900px;margin:0 auto 36px;line-h
 }
 @keyframes dividerAnim{0%{opacity:0.5;}100%{opacity:1;}}
 
-/* CONTACT FORM */
-.contact-form{display:flex;flex-direction:column;max-width:600px;margin:0 auto;}
-.contact-form input,.contact-form textarea{
-  margin-bottom:14px;padding:12px;border-radius:10px;border:none;
-  background:rgba(255,255,255,.08);color:#fff;transition: background .3s, transform .3s;
+/* GALLERY */
+.gallery{
+  position:relative;max-width:1000px;height:520px;margin:0 auto;
+  border-radius:20px;overflow:hidden;display:flex;
+  align-items:center;justify-content:center;background:rgba(0,0,0,.25);
+  perspective:600px;box-shadow:0 0 20px rgba(138,180,255,0.2);
 }
-.contact-form input:focus,.contact-form textarea:focus{background:rgba(255,255,255,.15);outline:none;transform:scale(1.02);}
-.contact-form button{
-  padding:12px;background:#8ab4ff;border:none;border-radius:10px;
-  font-weight:700;cursor:pointer;transition: background .3s, transform .3s, box-shadow .3s;
+.gallery img{
+  position:absolute;width:100%;height:100%;object-fit:cover;
+  border-radius:20px;opacity:0;transition:opacity 1s ease, transform 1s ease, box-shadow 0.5s;
+  transform: scale(1.1);z-index:0;
 }
-.contact-form button:hover{background:#6fa0ff;transform: scale(1.05);box-shadow:0 0 15px #8ab4ff;}
-
-footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
-@media(max-width:768px){.hero p{font-size:1.2rem;}}
-@media(max-width:480px){nav a{margin:6px 0;}}
+.gallery img.active{
+  opacity:1;transform: scale(1) rotateY(0deg);z-index:1;
+  box-shadow:0 0 20px #8ab4ff;
+}
+.gallery img:hover{transform:scale(1.05) rotateY(1deg);box-shadow:0 0 25px #8ab4ff;}
+.gallery .arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  font-size:40px;color:#fff;cursor:pointer;
+  background:rgba(0,0,0,0.3);padding:8px;border-radius:50%;
+  user-select:none;transition: background .3s, transform .3s;
+}
+.gallery .arrow:hover{background:rgba(0,0,0,0.5);transform:translateY(-50%) scale(1.1);}
+.gallery .arrow.left{left:20px;} .gallery .arrow.right{right:20px;}
+.thumbnails{
+  display:flex;overflow-x:auto;margin:12px auto 0;max-width:1000px;
+  gap:8px;padding-bottom:6px;
+}
+.thumbnails img{
+  width:80px;height:60px;object-fit:cover;border-radius:8px;
+  cursor:pointer;opacity:0.6;transition:opacity .3s, transform .3s, box-shadow .3s;
+}
+.thumbnails img.active-thumb{
+  opacity:1;border:2px solid #8ab4ff;transform:scale(1.05);box-shadow:0 0 10px #8ab4ff;
+}
+.thumbnails img:hover{opacity:1;transform:scale(1.05);}
+@media(max-width:768px){.gallery{height:320px;}.hero p{font-size:1.2rem;}}
+@media(max-width:480px){.thumbnails img{width:60px;height:45px;} nav a{margin:6px 0;}}
 
 /* EXTRA EFFECTS */
 .glow-text{color:#8ab4ff;text-shadow:0 0 10px #8ab4ff,0 0 20px #8ab4ff;animation:glow 2s infinite alternate;}
@@ -162,6 +185,26 @@ footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
     <h2>About ZTA</h2>
     <p>ZTA is a YouTube channel dedicated to capturing the beauty of the night sky.
        From breathtaking galaxies to stunning lunar shots, we explore astrophotography like never before.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="gallery">
+  <h2>Gallery</h2>
+  <div class="gallery">
+    <div class="arrow left">&#10094;</div>
+    <div class="arrow right">&#10095;</div>
+    <img src="assets/image1.jpg" class="active" alt="Gallery 1">
+    <img src="assets/image2.jpg" alt="Gallery 2">
+    <img src="assets/image3.jpg" alt="Gallery 3">
+    <img src="assets/image4.jpg" alt="Gallery 4">
+  </div>
+  <div class="thumbnails">
+    <img src="assets/image1.jpg" class="active-thumb">
+    <img src="assets/image2.jpg">
+    <img src="assets/image3.jpg">
+    <img src="assets/image4.jpg">
   </div>
 </section>
 
@@ -260,6 +303,29 @@ window.addEventListener('scroll',()=>{
   document.querySelector('.particles').style.transform=`translateY(${scrollY*0.03}px)`;
   document.querySelector('.nebula').style.transform=`translateY(${scrollY*0.02}px)`;
 });
+
+/* GALLERY FUNCTIONALITY */
+const galleryImages=document.querySelectorAll('.gallery img');
+const thumbs=document.querySelectorAll('.thumbnails img');
+let currentIndex=0;
+
+function showImage(index){
+  galleryImages.forEach((img,i)=>img.classList.toggle('active',i===index));
+  thumbs.forEach((thumb,i)=>thumb.classList.toggle('active-thumb',i===index));
+  currentIndex=index;
+}
+
+document.querySelector('.arrow.left').addEventListener('click',()=>{
+  showImage((currentIndex-1+galleryImages.length)%galleryImages.length);
+});
+document.querySelector('.arrow.right').addEventListener('click',()=>{
+  showImage((currentIndex+1)%galleryImages.length);
+});
+
+thumbs.forEach((thumb,i)=>thumb.addEventListener('click',()=>showImage(i)));
+
+/* OPTIONAL AUTO SLIDE */
+// setInterval(()=>showImage((currentIndex+1)%galleryImages.length),5000);
 </script>
 </body>
 </html>
