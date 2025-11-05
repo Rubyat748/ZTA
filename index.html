@@ -6,93 +6,132 @@
 <title>ZTA - Astrophotography</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
-  
+
   body {
     font-family: 'Segoe UI', Roboto, sans-serif;
     color: #fff;
     scroll-behavior: smooth;
-
-    /* Background image */
     background-image: url('assets/background.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
   }
 
-  /* === Glass Card === */
-  .glass { 
-    background: rgba(0,0,0,0.5); 
-    backdrop-filter: blur(8px); 
-    border-radius:16px; 
-    padding:30px; 
-    margin:20px auto; 
-    max-width:1000px; 
+  .glass {
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    border-radius:16px;
+    padding:30px;
+    margin:20px auto;
+    max-width:1000px;
   }
 
-  /* === Header === */
-  header { 
-    display:flex; 
-    align-items:center; 
-    justify-content: space-between; 
-    padding:20px 20px; 
-    position:sticky; 
-    top:0; 
-    background: rgba(0,0,0,0.6); 
-    backdrop-filter: blur(6px); 
-    z-index:100; 
+  header {
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding:20px 20px;
+    position:sticky;
+    top:0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px);
+    z-index:100;
   }
   header img { height:60px; }
   nav a { margin-left:20px; font-weight:600; transition:0.3s; text-decoration:none; color:#fff; }
   nav a:hover { color:#8ab4ff; }
 
-  /* === Hero Section === */
-  .hero { 
-    display:flex; 
-    flex-direction:column; 
-    align-items:center; 
-    justify-content:center; 
-    text-align:center; 
-    min-height:90vh; 
-    padding:20px; 
+  .hero {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    min-height:90vh;
+    padding:20px;
   }
   .hero h1 { font-size: clamp(28px, 6vw, 64px); margin-bottom:12px; }
   .hero p { font-size:18px; margin-bottom:20px; color:#ccc; }
-  .btn-subscribe { 
-    padding:12px 24px; 
-    background:#8ab4ff; 
-    color:#000; 
-    font-weight:700; 
-    border:none; 
-    border-radius:12px; 
-    cursor:pointer; 
-    transition:0.3s; 
+  .btn-subscribe {
+    padding:12px 24px;
+    background:#8ab4ff;
+    color:#000;
+    font-weight:700;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    transition:0.3s;
   }
   .btn-subscribe:hover { background:#5a8cff; }
 
-  /* === Sections === */
   section { padding:60px 20px; }
   section h2 { font-size:32px; margin-bottom:24px; text-align:center; }
   section p { text-align:center; max-width:800px; margin:0 auto 40px auto; color:#ccc; }
 
   /* === Gallery === */
-  .gallery { display:grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap:20px; }
-  .gallery img { width:100%; border-radius:12px; transition:0.3s; cursor:pointer; }
-  .gallery img:hover { transform: scale(1.05); }
+  .gallery {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:500px;
+    position:relative;
+    overflow:hidden;
+    border-radius:20px;
+    max-width:1000px;
+    margin:0 auto;
+  }
+  .gallery img {
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:20px;
+    opacity:0;
+    transition:opacity 1s ease-in-out;
+  }
+  .gallery img.active {
+    opacity:1;
+  }
 
   /* === Contact Form === */
-  .contact-form { display:flex; flex-direction:column; max-width:600px; margin:0 auto; }
-  .contact-form input, .contact-form textarea { margin-bottom:16px; padding:12px; border-radius:10px; border:none; background: rgba(255,255,255,0.1); color:#fff; }
+  .contact-form {
+    display:flex;
+    flex-direction:column;
+    max-width:600px;
+    margin:0 auto;
+  }
+  .contact-form input, .contact-form textarea {
+    margin-bottom:16px;
+    padding:12px;
+    border-radius:10px;
+    border:none;
+    background: rgba(255,255,255,0.1);
+    color:#fff;
+  }
   .contact-form input::placeholder, .contact-form textarea::placeholder { color:#bbb; }
-  .contact-form button { padding:12px; background:#8ab4ff; border:none; border-radius:10px; font-weight:700; cursor:pointer; transition:0.3s; }
+  .contact-form button {
+    padding:12px;
+    background:#8ab4ff;
+    border:none;
+    border-radius:10px;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.3s;
+  }
   .contact-form button:hover { background:#5a8cff; }
 
-  /* === Footer === */
-  footer { text-align:center; padding:20px; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); color:#aaa; }
+  footer {
+    text-align:center;
+    padding:20px;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px);
+    color:#aaa;
+  }
 
-  /* === Responsive === */
-  @media(max-width:768px){ 
-    header { flex-direction: column; } 
-    nav a { margin:10px 0 0 0; } 
+  @media(max-width:768px){
+    header { flex-direction: column; }
+    nav a { margin:10px 0 0 0; }
+    .gallery { height:300px; }
   }
 </style>
 </head>
@@ -123,11 +162,7 @@
 
 <section id="gallery">
   <h2>Gallery</h2>
-  <div class="gallery">
-    <img src="assets/gallery/1.jpg" alt="Gallery Image">
-    <img src="assets/gallery/2.jpg" alt="Gallery Image">
-    <img src="assets/gallery/3.jpg" alt="Gallery Image">
-  </div>
+  <div class="gallery" id="gallery-container"></div>
 </section>
 
 <section id="contact">
@@ -143,6 +178,32 @@
 <footer>
   &copy; 2025 ZTA | All Rights Reserved
 </footer>
+
+<script>
+  // === Auto-Changing Gallery ===
+  const galleryContainer = document.getElementById("gallery-container");
+  const totalImages = 50; // Change this to match how many photos you have
+  const imageFolder = "assets/gallery/";
+  const imageFormat = ".jpg";
+
+  // Create all images dynamically
+  for (let i = 1; i <= totalImages; i++) {
+    const img = document.createElement("img");
+    img.src = `${imageFolder}${i}${imageFormat}`;
+    img.alt = `Gallery Image ${i}`;
+    galleryContainer.appendChild(img);
+  }
+
+  const images = galleryContainer.querySelectorAll("img");
+  let index = 0;
+  images[index].classList.add("active");
+
+  setInterval(() => {
+    images[index].classList.remove("active");
+    index = (index + 1) % images.length;
+    images[index].classList.add("active");
+  }, 3000); // Change every 3 seconds
+</script>
 
 </body>
 </html>
