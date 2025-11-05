@@ -18,98 +18,67 @@
 body{
   font-family:'Segoe UI',Roboto,sans-serif;
   color:#fff;
-  background:#000;
+  background:#0b0b0b;
   overflow-x:hidden;
   scroll-behavior:smooth;
-  perspective:1200px;
 }
 
 /* ==================================================== */
-/* BACKGROUND LAYERS */
-/* ==================================================== */
-body::before{
-  content:"";
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  background:transparent url('assets/background.png') center/cover no-repeat;
-  z-index:-5;
-  animation:bgZoom 240s linear infinite;
-}
-@keyframes bgZoom{0%{transform:scale(1);}50%{transform:scale(1.05);}100%{transform:scale(1);}}
-
-/* ==================================================== */
-/* STARS, PARTICLES, SHOOTING STARS */
-/* ==================================================== */
-.stars, .particles, .shooting-star, .nebula{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-4;}
-.star{position:absolute;background:white;border-radius:50%;animation:twinkle 2s infinite alternate;}
-@keyframes twinkle{0%{opacity:0.2;}50%{opacity:0.7;}100%{opacity:1;}}
-.particle{position:absolute;width:2px;height:2px;background:white;border-radius:50%;opacity:0.5;}
-.shooting-star div{position:absolute;width:2px;height:80px;background:linear-gradient(white,transparent);opacity:0;}
-.nebula canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:-3;}
-
-/* ==================================================== */
-/* HEADER */
+/* HEADER STYLING */
 /* ==================================================== */
 header{
   display:flex;align-items:center;justify-content:space-between;
-  padding:18px;position:sticky;top:0;background:rgba(0,0,0,.6);
-  backdrop-filter:blur(6px);z-index:100;transition:all .3s;
+  padding:18px;position:sticky;top:0;background:rgba(0,0,0,.7);
+  backdrop-filter:blur(6px);z-index:100;
 }
 header img{height:56px;transition: transform .3s;}
 header img:hover{transform:rotate(-5deg);}
-nav a{margin-left:18px;color:#fff;text-decoration:none;font-weight:600;transition:color .3s, transform .3s;position:relative;}
-nav a:hover{color:#8ab4ff;transform:scale(1.05);}
-nav a::after{content:"✦";position:absolute;opacity:0;top:-10px;right:-10px;color:#8ab4ff;transition:all .3s;}
-nav a:hover::after{opacity:1;transform:rotate(20deg);}
-@media(max-width:768px){header{flex-direction:column;}nav a{margin:8px 0 0;}}
+nav a{margin-left:18px;color:#fff;text-decoration:none;font-weight:600;transition:color .3s;}
+nav a:hover{color:#8ab4ff;}
 
 /* ==================================================== */
 /* HERO SECTION */
 /* ==================================================== */
 .hero{
   display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-  min-height:80vh;padding:28px;overflow:hidden;animation:heroFade 2s ease-in-out;
+  min-height:80vh;padding:28px;overflow:hidden;
 }
-@keyframes heroFade{0%{opacity:0;transform:translateY(50px);}100%{opacity:1;transform:translateY(0);}}
-.hero h1,.hero p{font-family:"Caveat Brush",cursive;font-weight:400;font-style:normal;margin-bottom:12px;}
+.hero h1,.hero p{font-family:"Caveat Brush",cursive;font-weight:400;margin-bottom:12px;}
 .hero h1{font-size:clamp(28px,6vw,64px);}
-.hero p{color:#ccc;margin-bottom:18px;font-size:1.5rem;letter-spacing:0.5px;}
-.btn-subscribe{padding:10px 20px;background:#8ab4ff;color:#000;border-radius:12px;border:none;font-weight:700;cursor:pointer;transition: transform .3s, background .3s, box-shadow .3s;}
-.btn-subscribe:hover{transform: scale(1.1) rotate(-1deg);background:#6fa0ff;box-shadow:0 0 20px #8ab4ff;}
+.hero p{color:#ccc;margin-bottom:18px;font-size:1.5rem;}
+.btn-subscribe{padding:10px 20px;background:#8ab4ff;color:#000;border-radius:12px;border:none;font-weight:700;cursor:pointer;transition: all .3s;}
+.btn-subscribe:hover{transform: scale(1.1);background:#6fa0ff;box-shadow:0 0 20px #8ab4ff;}
 
 /* ==================================================== */
 /* SECTIONS & GLASS EFFECT */
 /* ==================================================== */
-section{padding:48px 20px;opacity:0;transform:translateY(50px);transition:opacity 1s, transform 1s;position:relative;}
+section{padding:48px 20px;opacity:0;transform:translateY(50px);transition:opacity 1s, transform 1s;}
 section.visible{opacity:1;transform:translateY(0);}
 section h2{text-align:center;font-size:32px;margin-bottom:18px;font-family:"Caveat Brush",cursive;}
 section p{color:#ccc;text-align:center;max-width:900px;margin:0 auto 36px;line-height:1.6;}
 .glass{background:rgba(0,0,0,.45);backdrop-filter:blur(8px);border-radius:16px;padding:26px;max-width:1000px;margin:0 auto;box-shadow:0 0 20px rgba(138,180,255,0.3);}
-.divider{width:100%;height:4px;background:linear-gradient(to right,#8ab4ff,transparent,#8ab4ff);margin:40px 0;border-radius:4px;animation:dividerAnim 3s ease-in-out infinite alternate;}
-@keyframes dividerAnim{0%{opacity:0.5;}100%{opacity:1;}}
+.divider{width:100%;height:4px;background:linear-gradient(to right,#8ab4ff,transparent,#8ab4ff);margin:40px 0;border-radius:4px;}
 
 /* ==================================================== */
 /* GALLERY STYLING */
 /* ==================================================== */
-.gallery{position:relative;max-width:1000px;height:520px;margin:0 auto;border-radius:20px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.25);perspective:600px;box-shadow:0 0 20px rgba(138,180,255,0.2);}
-.gallery img{position:absolute;width:100%;height:100%;object-fit:cover;border-radius:20px;opacity:0;transition:opacity 1s ease, transform 1s ease, box-shadow 0.5s;transform: scale(1.1);z-index:0;}
-.gallery img.active{opacity:1;transform: scale(1) rotateY(0deg);z-index:1;box-shadow:0 0 20px #8ab4ff;}
-.gallery img:hover{transform:scale(1.05) rotateY(1deg);box-shadow:0 0 25px #8ab4ff;}
-.gallery .arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:40px;color:#fff;cursor:pointer;background:rgba(0,0,0,0.3);padding:8px;border-radius:50%;user-select:none;transition: background .3s, transform .3s;}
-.gallery .arrow:hover{background:rgba(0,0,0,0.5);transform:translateY(-50%) scale(1.1);}
+.gallery{position:relative;max-width:1000px;height:520px;margin:0 auto;border-radius:20px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.25);box-shadow:0 0 20px rgba(138,180,255,0.2);}
+.gallery img{position:absolute;width:100%;height:100%;object-fit:cover;border-radius:20px;opacity:0;transition:opacity 1s ease, transform 1s;}
+.gallery img.active{opacity:1;transform: scale(1);}
+.gallery .arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:40px;color:#fff;cursor:pointer;background:rgba(0,0,0,0.3);padding:8px;border-radius:50%;user-select:none;}
 .gallery .arrow.left{left:20px;} .gallery .arrow.right{right:20px;}
 .thumbnails{display:flex;overflow-x:auto;margin:12px auto 0;max-width:1000px;gap:8px;padding-bottom:6px;}
-.thumbnails img{width:80px;height:60px;object-fit:cover;border-radius:8px;cursor:pointer;opacity:0.6;transition:opacity .3s, transform .3s, box-shadow .3s;}
-.thumbnails img.active-thumb{opacity:1;border:2px solid #8ab4ff;transform:scale(1.05);box-shadow:0 0 10px #8ab4ff;}
-.thumbnails img:hover{opacity:1;transform:scale(1.05);}
+.thumbnails img{width:80px;height:60px;object-fit:cover;border-radius:8px;cursor:pointer;opacity:0.6;transition:opacity .3s;}
+.thumbnails img.active-thumb{opacity:1;border:2px solid #8ab4ff;}
 
 /* ==================================================== */
 /* CONTACT FORM */
 /* ==================================================== */
 .contact-form{display:flex;flex-direction:column;max-width:600px;margin:0 auto;}
-.contact-form input,.contact-form textarea{margin-bottom:14px;padding:12px;border-radius:10px;border:none;background:rgba(255,255,255,.08);color:#fff;transition: background .3s, transform .3s;}
-.contact-form input:focus,.contact-form textarea:focus{background:rgba(255,255,255,.15);outline:none;transform:scale(1.02);}
-.contact-form button{padding:12px;background:#8ab4ff;border:none;border-radius:10px;font-weight:700;cursor:pointer;transition: background .3s, transform .3s, box-shadow .3s;}
-.contact-form button:hover{background:#6fa0ff;transform: scale(1.05);box-shadow:0 0 15px #8ab4ff;}
+.contact-form input,.contact-form textarea{margin-bottom:14px;padding:12px;border-radius:10px;border:none;background:rgba(255,255,255,.08);color:#fff;transition: background .3s;}
+.contact-form input:focus,.contact-form textarea:focus{background:rgba(255,255,255,.15);outline:none;}
+.contact-form button{padding:12px;background:#8ab4ff;border:none;border-radius:10px;font-weight:700;cursor:pointer;}
+.contact-form button:hover{background:#6fa0ff;box-shadow:0 0 15px #8ab4ff;}
 
 /* ==================================================== */
 /* FOOTER */
@@ -117,30 +86,29 @@ section p{color:#ccc;text-align:center;max-width:900px;margin:0 auto 36px;line-h
 footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
 
 /* ==================================================== */
-/* MEDIA QUERIES */
+/* STARS & COMETS */
 /* ==================================================== */
-@media(max-width:768px){.gallery{height:320px;}.hero p{font-size:1.2rem;}}
-@media(max-width:480px){nav a{margin:6px 0;}.thumbnails img{width:60px;height:45px;}}
+.stars, .particles, .shooting-star{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}
+.stars div, .particles div{position:absolute;background:white;border-radius:50%;}
+.comet{position:absolute;width:2px;height:60px;background:linear-gradient(white,transparent);opacity:0.8;border-radius:50%;pointer-events:none;}
 
 /* ==================================================== */
-/* EXTRA EFFECTS */
+/* SCROLL REVEAL */
 /* ==================================================== */
-.glow-text{color:#8ab4ff;text-shadow:0 0 10px #8ab4ff,0 0 20px #8ab4ff;animation:glow 2s infinite alternate;}
-@keyframes glow{0%{text-shadow:0 0 10px #8ab4ff;}50%{text-shadow:0 0 20px #6fa0ff;}100%{text-shadow:0 0 10px #8ab4ff;}}
+section.visible{opacity:1;transform:translateY(0);transition:opacity 1s, transform 1s;}
 
-.comet{position:absolute;width:2px;height:60px;background:linear-gradient(white,transparent);opacity:0.8;top:0;left:0;border-radius:50%;pointer-events:none;animation:cometAnim 2s linear infinite;}
-@keyframes cometAnim{0%{transform:translateX(0) translateY(0) rotate(0deg);}100%{transform:translateX(120vw) translateY(80vh) rotate(360deg);}}
-
+/* ==================================================== */
+/* MOUSE FOLLOW STARS */
+/* ==================================================== */
+.particle{position:absolute;background:white;border-radius:50%;width:2px;height:2px;pointer-events:none;}
 </style>
 </head>
-
 <body>
 
-<!-- BACKGROUND EFFECTS -->
+<!-- BACKGROUND STARS -->
 <div class="stars"></div>
 <div class="particles"></div>
 <div class="shooting-star"></div>
-<div class="nebula"><canvas id="nebula-canvas"></canvas></div>
 
 <!-- HEADER -->
 <header>
@@ -155,8 +123,8 @@ footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <h1 class="glow-text">ZTA</h1>
-  <p class="glow-text">Exploring the Universe Through My Lens</p>
+  <h1>ZTA</h1>
+  <p>Exploring the Universe Through My Lens</p>
   <a href="https://youtube.com/@zta" target="_blank">
     <button class="btn-subscribe">Subscribe</button>
   </a>
@@ -167,8 +135,7 @@ footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
   <div class="glass">
     <h2>About ZTA</h2>
     <div class="divider"></div>
-    <p>ZTA is a YouTube channel dedicated to capturing the beauty of the night sky.
-      From breathtaking galaxies to stunning lunar shots, we explore astrophotography like never before.</p>
+    <p>ZTA is a YouTube channel dedicated to capturing the beauty of the night sky. From galaxies to stunning lunar shots, we explore astrophotography like never before.</p>
   </div>
 </section>
 
@@ -200,32 +167,32 @@ footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
 <footer>&copy; 2025 ZTA | All Rights Reserved</footer>
 
 <script>
-/* ==================================================== */
-/* STARS & PARTICLES GENERATOR */
-/* ==================================================== */
+// ====================================================
+// STARS & PARTICLES
+// ====================================================
 const starsContainer=document.querySelector('.stars');
 for(let i=0;i<300;i++){
-  let star=document.createElement('div');star.className='star';
+  let star=document.createElement('div');
   star.style.top=Math.random()*100+'%';
   star.style.left=Math.random()*100+'%';
-  star.style.width=Math.random()*2+1+'px';
-  star.style.height=star.style.width;
-  star.style.animationDuration=(Math.random()*3+1)+'s';
+  star.style.width=star.style.height=Math.random()*2+1+'px';
   starsContainer.appendChild(star);
 }
 const particlesContainer=document.querySelector('.particles');
 for(let i=0;i<150;i++){
-  let p=document.createElement('div');p.className='particle';
+  let p=document.createElement('div');
   p.style.top=Math.random()*100+'%';
   p.style.left=Math.random()*100+'%';
+  p.style.width=p.style.height='2px';
   particlesContainer.appendChild(p);
 }
 
-/* ==================================================== */
-/* SHOOTING STARS */
-/* ==================================================== */
+// ====================================================
+// SHOOTING STARS
+// ====================================================
 function createShootingStar(){
-  let star=document.createElement('div');star.className='comet';
+  let star=document.createElement('div');
+  star.className='comet';
   star.style.top=Math.random()*50+'%';
   star.style.left='-10%';
   document.body.appendChild(star);
@@ -233,14 +200,14 @@ function createShootingStar(){
 }
 setInterval(createShootingStar,4000);
 
-/* ==================================================== */
-/* GALLERY LOADER + SLIDESHOW */
-/* ==================================================== */
+// ====================================================
+// GALLERY LOADER + SLIDESHOW
+// ====================================================
 (async function(){
   const container=document.getElementById('gallery-container');
   const thumbsContainer=document.getElementById('gallery-thumbnails');
   const loadingText=container.querySelector('p');
-  const folder='assets/gallery/',ext='.jpg',maxTry=50,slideTime=4000;
+  const folder='assets/gallery/',ext='.jpg',maxTry=20,slideTime=4000;
   let imgs=[],thumbs=[];
   for(let i=1;i<=maxTry;i++){
     const url=folder+i+ext;
@@ -259,51 +226,45 @@ setInterval(createShootingStar,4000);
   if(loadingText) loadingText.remove();
   if(imgs.length===0){container.innerHTML='<p>No images found</p>';return;}
   let index=0;imgs[index].classList.add('active');thumbs[index].classList.add('active-thumb');
-  const showImage=i=>{imgs.forEach(img=>img.classList.remove('active'));thumbs.forEach(thumb=>thumb.classList.remove('active-thumb'));imgs[i].classList.add('active');thumbs[i].classList.add('active-thumb');index=i;}
+  const showImage=i=>{
+    imgs.forEach(img=>img.classList.remove('active'));
+    thumbs.forEach(thumb=>thumb.classList.remove('active-thumb'));
+    imgs[i].classList.add('active');
+    thumbs[i].classList.add('active-thumb');
+    index=i;
+  }
   let autoSlide=setInterval(()=>{index=(index+1)%imgs.length;showImage(index);},slideTime);
-  container.querySelector('.arrow.left').addEventListener('click',()=>{clearInterval(autoSlide);index=(index-1+imgs.length)%imgs.length;showImage(index);autoSlide=setInterval(()=>{index=(index+1)%imgs.length;showImage(index);},slideTime);});
-  container.querySelector('.arrow.right').addEventListener('click',()=>{clearInterval(autoSlide);index=(index+1)%imgs.length;showImage(index);autoSlide=setInterval(()=>{index=(index+1)%imgs.length;showImage(index);},slideTime);});
+  container.querySelector('.arrow.left').addEventListener('click',()=>{
+    clearInterval(autoSlide);
+    index=(index-1+imgs.length)%imgs.length;
+    showImage(index);
+    autoSlide=setInterval(()=>{index=(index+1)%imgs.length;showImage(index);},slideTime);
+  });
+  container.querySelector('.arrow.right').addEventListener('click',()=>{
+    clearInterval(autoSlide);
+    index=(index+1)%imgs.length;
+    showImage(index);
+    autoSlide=setInterval(()=>{index=(index+1)%imgs.length;showImage(index);},slideTime);
+  });
   thumbs.forEach((thumb,i)=>{thumb.addEventListener('click',()=>{clearInterval(autoSlide);showImage(i);autoSlide=setInterval(()=>{index=(index+1)%imgs.length;showImage(index);},slideTime);});});
 })();
 
-/* ==================================================== */
-/* NEBULA CANVAS ANIMATION */
-/* ==================================================== */
-const nebulaCanvas=document.getElementById('nebula-canvas');
-const nctx=nebulaCanvas.getContext('2d');
-function resizeCanvas(){nebulaCanvas.width=window.innerWidth;nebulaCanvas.height=window.innerHeight;}
-resizeCanvas();window.addEventListener('resize',resizeCanvas);
-let particlesArr=[];
-for(let i=0;i<300;i++){particlesArr.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,radius:Math.random()*2+1,speedX:(Math.random()-0.5)*0.3,speedY:(Math.random()-0.5)*0.3});}
-function animateNebula(){
-  nctx.clearRect(0,0,nebulaCanvas.width,nebulaCanvas.height);
-  particlesArr.forEach(p=>{
-    nctx.beginPath();nctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
-    nctx.fillStyle='rgba(138,180,255,0.3)';nctx.fill();
-    p.x+=p.speedX;p.y+=p.speedY;
-    if(p.x<0)p.x=nebulaCanvas.width;if(p.x>nebulaCanvas.width)p.x=0;
-    if(p.y<0)p.y=nebulaCanvas.height;if(p.y>nebulaCanvas.height)p.y=0;
-  });
-  requestAnimationFrame(animateNebula);
-}
-animateNebula();
-
-/* ==================================================== */
-/* SCROLL REVEAL SECTIONS */
-/* ==================================================== */
+// ====================================================
+// SCROLL REVEAL SECTIONS
+// ====================================================
 const sections=document.querySelectorAll('section');
 window.addEventListener('scroll',()=>{
   const scrollY=window.scrollY+window.innerHeight*0.7;
   sections.forEach(sec=>{if(scrollY>sec.offsetTop)sec.classList.add('visible');});
 });
 
-/* ==================================================== */
-/* MOUSE FOLLOW CONSTELLATION */
-/* ==================================================== */
+// ====================================================
+// MOUSE FOLLOW STARS
+// ====================================================
 const mouseStars=[];
 document.addEventListener('mousemove',e=>{
   const star=document.createElement('div');star.className='particle';
-  star.style.left=e.clientX+'px';star.style.top=e.clientY+'px';star.style.width='2px';star.style.height='2px';
+  star.style.left=e.clientX+'px';star.style.top=e.clientY+'px';
   document.body.appendChild(star);
   mouseStars.push(star);
   if(mouseStars.length>30){let old=mouseStars.shift();old.remove();}
