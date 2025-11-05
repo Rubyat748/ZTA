@@ -11,16 +11,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet">
 
 <style>
+/* ================== RESET & BODY ================== */
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
   font-family:'Segoe UI',Roboto,sans-serif;
   color:#fff;
   overflow-x:hidden;
   scroll-behavior:smooth;
-  perspective:1000px;
+  background:#000;
 }
 
-/* FIXED BACKGROUND FROM ASSETS - NO ZOOM */
+/* ================== FIXED BACKGROUND ================== */
 body::before{
   content:"";
   position:fixed;
@@ -31,7 +32,7 @@ body::before{
   pointer-events:none;
 }
 
-/* STARS, PARTICLES, SHOOTING STARS */
+/* ================== STARS, PARTICLES, COMETS ================== */
 .stars, .shooting-star, .particles, .nebula{
   position:fixed;top:0;left:0;width:100%;height:100%;
   pointer-events:none; z-index:-3;
@@ -40,51 +41,43 @@ body::before{
 @keyframes twinkle{from{opacity:0.2;}to{opacity:1;}}
 .particle{position:absolute;width:2px;height:2px;background:white;border-radius:50%;opacity:0.6;}
 .shooting-star div{position:absolute;width:2px;height:80px;background:linear-gradient(white,transparent);opacity:0;}
-.nebula canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:-2;}
+.comet{position:absolute;width:2px;height:60px;background:linear-gradient(white,transparent);opacity:0.8;top:10%;left:0;transform:rotate(45deg);animation:cometMove 5s linear infinite;}
+@keyframes cometMove{0%{transform:translateX(0) rotate(45deg);}100%{transform:translateX(120vw) rotate(45deg);}}
 
-/* HEADER */
+/* ================== HEADER ================== */
 header{
   display:flex;align-items:center;justify-content:space-between;
   padding:18px;position:sticky;top:0;
   background:rgba(0,0,0,.6);backdrop-filter:blur(6px);z-index:100;
-  transition:all .3s;
 }
 header img{height:56px;transition: transform .3s;}
 header img:hover{transform:rotate(-5deg);}
 nav a{
-  margin-left:18px;color:#fff;text-decoration:none;font-weight:600;
-  transition:color .3s, transform .3s;position:relative;
+  margin-left:18px;color:#fff;text-decoration:none;font-weight:600;position:relative;
+  transition:color .3s, transform .3s;
 }
 nav a:hover{color:#8ab4ff;transform:scale(1.05);}
-nav a::after{
-  content:"✦";position:absolute;opacity:0;top:-10px;right:-10px;color:#8ab4ff;
-  transition:all .3s;
-}
+nav a::after{content:"✦";position:absolute;opacity:0;top:-10px;right:-10px;color:#8ab4ff;transition:all .3s;}
 nav a:hover::after{opacity:1;transform:rotate(20deg);}
-@media(max-width:768px){header{flex-direction:column;}nav a{margin:8px 0 0;}}
+@media(max-width:768px){header{flex-direction:column;} nav a{margin:8px 0 0;}}
 
-/* HERO SECTION */
+/* ================== HERO SECTION ================== */
 .hero{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;min-height:80vh;padding:28px;overflow:hidden;
-  animation:heroFade 2s ease-in-out;
+  text-align:center;min-height:100vh;padding:28px;overflow:hidden;
 }
-@keyframes heroFade{0%{opacity:0;transform:translateY(50px);}100%{opacity:1;transform:translateY(0);}}
-.hero h1,.hero p{font-family:"Caveat Brush",cursive;margin-bottom:12px;}
+.hero h1,.hero p{
+  font-family:"Caveat Brush",cursive;font-weight:400;margin-bottom:12px;
+}
 .hero h1{font-size:clamp(28px,6vw,64px);}
 .hero p{color:#ccc;margin-bottom:18px;font-size:1.5rem;letter-spacing:0.5px;}
 .btn-subscribe{
-  padding:10px 20px;background:#8ab4ff;color:#000;
-  border-radius:12px;border:none;font-weight:700;cursor:pointer;
+  padding:10px 20px;background:#8ab4ff;color:#000;border-radius:12px;border:none;font-weight:700;cursor:pointer;
   transition: transform .3s, background .3s, box-shadow .3s;
 }
-.btn-subscribe:hover{
-  transform: scale(1.1) rotate(-1deg);
-  background:#6fa0ff;
-  box-shadow:0 0 20px #8ab4ff;
-}
+.btn-subscribe:hover{transform: scale(1.1) rotate(-1deg); background:#6fa0ff; box-shadow:0 0 20px #8ab4ff;}
 
-/* SECTIONS & GLASS EFFECT */
+/* ================== SECTIONS & GLASS EFFECT ================== */
 section{
   padding:48px 20px;opacity:0;transform:translateY(50px);
   transition:opacity 1s, transform 1s;position:relative;
@@ -101,59 +94,63 @@ section p{color:#ccc;text-align:center;max-width:900px;margin:0 auto 36px;line-h
   width:100%;height:4px;
   background:linear-gradient(to right,#8ab4ff,transparent,#8ab4ff);
   margin:40px 0;border-radius:4px;
-  animation:dividerAnim 3s ease-in-out infinite alternate;
 }
-@keyframes dividerAnim{0%{opacity:0.5;}100%{opacity:1;}}
 
-/* GALLERY */
+/* ================== GALLERY ================== */
 .gallery{
   position:relative;max-width:1000px;height:520px;margin:0 auto;
   border-radius:20px;overflow:hidden;display:flex;
-  align-items:center;justify-content:center;background:rgba(0,0,0,.25);
-  perspective:600px;box-shadow:0 0 20px rgba(138,180,255,0.2);
+  align-items:center;justify-content:center;
+  background:rgba(0,0,0,.25);box-shadow:0 0 20px rgba(138,180,255,0.2);
 }
 .gallery img{
   position:absolute;width:100%;height:100%;object-fit:cover;
-  border-radius:20px;opacity:0;transition:opacity 1s ease, transform 1s ease, box-shadow 0.5s;
-  transform: scale(1.1);z-index:0;
+  border-radius:20px;opacity:0;transition:opacity 1s ease, transform 0.5s ease, box-shadow 0.5s;
+  transform: scale(1);
 }
-.gallery img.active{
-  opacity:1;transform: scale(1) rotateY(0deg);z-index:1;
-  box-shadow:0 0 20px #8ab4ff;
-}
-.gallery img:hover{transform:scale(1.05) rotateY(1deg);box-shadow:0 0 25px #8ab4ff;}
+.gallery img.active{opacity:1;z-index:1;box-shadow:0 0 20px #8ab4ff;}
+.gallery img:hover{transform:scale(1.05);box-shadow:0 0 25px #8ab4ff;}
 .gallery .arrow{
   position:absolute;top:50%;transform:translateY(-50%);
-  font-size:40px;color:#fff;cursor:pointer;
-  background:rgba(0,0,0,0.3);padding:8px;border-radius:50%;
-  user-select:none;transition: background .3s, transform .3s;
+  font-size:40px;color:#fff;cursor:pointer;background:rgba(0,0,0,0.3);
+  padding:8px;border-radius:50%;transition: background .3s, transform .3s;
 }
 .gallery .arrow:hover{background:rgba(0,0,0,0.5);transform:translateY(-50%) scale(1.1);}
 .gallery .arrow.left{left:20px;} .gallery .arrow.right{right:20px;}
 .thumbnails{
-  display:flex;overflow-x:auto;margin:12px auto 0;max-width:1000px;
-  gap:8px;padding-bottom:6px;
+  display:flex;overflow-x:auto;margin:12px auto 0;max-width:1000px;gap:8px;padding-bottom:6px;
 }
 .thumbnails img{
-  width:80px;height:60px;object-fit:cover;border-radius:8px;
-  cursor:pointer;opacity:0.6;transition:opacity .3s, transform .3s, box-shadow .3s;
+  width:80px;height:60px;object-fit:cover;border-radius:8px;cursor:pointer;opacity:0.6;
+  transition:opacity .3s, transform .3s, box-shadow .3s;
 }
-.thumbnails img.active-thumb{
-  opacity:1;border:2px solid #8ab4ff;transform:scale(1.05);box-shadow:0 0 10px #8ab4ff;
-}
+.thumbnails img.active-thumb{opacity:1;border:2px solid #8ab4ff;transform:scale(1.05);box-shadow:0 0 10px #8ab4ff;}
 .thumbnails img:hover{opacity:1;transform:scale(1.05);}
-@media(max-width:768px){.gallery{height:320px;}.hero p{font-size:1.2rem;}}
-@media(max-width:480px){.thumbnails img{width:60px;height:45px;} nav a{margin:6px 0;}}
 
-/* EXTRA EFFECTS */
-.glow-text{color:#8ab4ff;text-shadow:0 0 10px #8ab4ff,0 0 20px #8ab4ff;animation:glow 2s infinite alternate;}
-@keyframes glow{0%{text-shadow:0 0 10px #8ab4ff;}50%{text-shadow:0 0 20px #6fa0ff;}100%{text-shadow:0 0 10px #8ab4ff;}}
-.comet{position:absolute;width:2px;height:60px;background:linear-gradient(white,transparent);opacity:0.8;top:10%;left:0;transform:rotate(45deg);animation:cometMove 5s linear infinite;}
-@keyframes cometMove{0%{transform:translateX(0) rotate(45deg);}100%{transform:translateX(120vw) rotate(45deg);}}
+/* ================== CONTACT ================== */
+.contact-form{display:flex;flex-direction:column;max-width:600px;margin:0 auto;}
+.contact-form input,.contact-form textarea{
+  margin-bottom:14px;padding:12px;border-radius:10px;border:none;
+  background:rgba(255,255,255,.08);color:#fff;transition: background .3s, transform .3s;
+}
+.contact-form input:focus,.contact-form textarea:focus{background:rgba(255,255,255,.15);outline:none;transform:scale(1.02);}
+.contact-form button{
+  padding:12px;background:#8ab4ff;border:none;border-radius:10px;
+  font-weight:700;cursor:pointer;transition: background .3s, transform .3s, box-shadow .3s;
+}
+.contact-form button:hover{background:#6fa0ff;transform: scale(1.05);box-shadow:0 0 15px #8ab4ff;}
+
+/* ================== FOOTER ================== */
+footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
+
+/* ================== MEDIA QUERIES ================== */
+@media(max-width:768px){.gallery{height:320px;} .hero p{font-size:1.2rem;}}
+@media(max-width:480px){nav a{margin:6px 0;} .thumbnails img{width:60px;height:45px;}}
 </style>
 </head>
 <body>
 
+<!-- Effects -->
 <div class="stars"></div>
 <div class="shooting-star"></div>
 <div class="particles"></div>
@@ -171,9 +168,9 @@ section p{color:#ccc;text-align:center;max-width:900px;margin:0 auto 36px;line-h
 </header>
 
 <section class="hero" id="home">
-  <h1 class="glow-text" id="hero-title"></h1>
-  <p class="glow-text" id="hero-subtitle"></p>
-  <a href="https://youtube.com/@zta69?si=u6k79IzVqV9hh7gZ" target="_blank">
+  <h1 id="hero-title"></h1>
+  <p id="hero-subtitle"></p>
+  <a href="https://youtube.com/@zta69" target="_blank">
     <button class="btn-subscribe">Subscribe</button>
   </a>
 </section>
@@ -183,8 +180,7 @@ section p{color:#ccc;text-align:center;max-width:900px;margin:0 auto 36px;line-h
 <section id="about">
   <div class="glass">
     <h2>About ZTA</h2>
-    <p>ZTA is a YouTube channel dedicated to capturing the beauty of the night sky.
-       From breathtaking galaxies to stunning lunar shots, we explore astrophotography like never before.</p>
+    <p>ZTA is a YouTube channel dedicated to capturing the beauty of the night sky. From breathtaking galaxies to stunning lunar shots, we explore astrophotography like never before.</p>
   </div>
 </section>
 
@@ -225,7 +221,7 @@ section p{color:#ccc;text-align:center;max-width:900px;margin:0 auto 36px;line-h
 <footer>&copy; 2025 ZTA | All Rights Reserved</footer>
 
 <script>
-/* HERO TYPING ANIMATION */
+/* HERO TEXT TYPING */
 const heroTitle="ZTA", heroSubtitle="Exploring the Universe Through My Lens";
 let i=0,j=0;
 function typeWriter(){
@@ -234,7 +230,7 @@ function typeWriter(){
 }
 typeWriter();
 
-/* SECTION REVEAL ON SCROLL */
+/* SECTION REVEAL */
 const sections=document.querySelectorAll('section');
 window.addEventListener('scroll',()=>{
   sections.forEach(section=>{
@@ -243,40 +239,30 @@ window.addEventListener('scroll',()=>{
   });
 });
 
-/* STARS, PARTICLES & SHOOTING STARS */
+/* STARS, PARTICLES, SHOOTING STARS */
 const starsContainer=document.querySelector('.stars');
 for(let k=0;k<100;k++){
-  const star=document.createElement('div');
-  star.className='star';
+  const star=document.createElement('div');star.className='star';
   star.style.width=star.style.height=Math.random()*2+1+'px';
-  star.style.top=Math.random()*100+'%';
-  star.style.left=Math.random()*100+'%';
-  star.style.animationDuration=(Math.random()*3+2)+'s';
-  starsContainer.appendChild(star);
+  star.style.top=Math.random()*100+'%'; star.style.left=Math.random()*100+'%';
+  star.style.animationDuration=(Math.random()*3+2)+'s'; starsContainer.appendChild(star);
 }
-
 const particlesContainer=document.querySelector('.particles');
 for(let k=0;k<150;k++){
-  const p=document.createElement('div');
-  p.className='particle';
-  p.style.top=Math.random()*100+'%';
-  p.style.left=Math.random()*100+'%';
-  p.style.width=p.style.height=Math.random()*2+1+'px';
-  particlesContainer.appendChild(p);
+  const p=document.createElement('div');p.className='particle';
+  p.style.top=Math.random()*100+'%';p.style.left=Math.random()*100+'%';
+  p.style.width=p.style.height=Math.random()*2+1+'px';particlesContainer.appendChild(p);
 }
-
 const shootingContainer=document.querySelector('.shooting-star');
 function createShootingStar(){
-  const star=document.createElement('div');
-  star.style.top=Math.random()*50+'%';
-  star.style.left='-10%';
+  const star=document.createElement('div');star.style.top=Math.random()*50+'%';star.style.left='-10%';
   shootingContainer.appendChild(star);
   star.animate([{transform:'translateX(0)'},{transform:'translateX(120vw)'}],{duration:3000,easing:'linear'});
   setTimeout(()=>star.remove(),3000);
 }
 setInterval(createShootingStar,4000);
 
-/* NEBULA CANVAS ANIMATION */
+/* NEBULA CANVAS */
 const nebulaCanvas=document.getElementById('nebula-canvas');
 const nctx=nebulaCanvas.getContext('2d');
 function resizeCanvas(){nebulaCanvas.width=window.innerWidth;nebulaCanvas.height=window.innerHeight;}
@@ -296,7 +282,7 @@ function animateNebula(){
 }
 animateNebula();
 
-/* PARALLAX SCROLL EFFECT */
+/* PARALLAX */
 window.addEventListener('scroll',()=>{
   const scrollY=window.scrollY;
   document.querySelector('.stars').style.transform=`translateY(${scrollY*0.05}px)`;
@@ -304,28 +290,18 @@ window.addEventListener('scroll',()=>{
   document.querySelector('.nebula').style.transform=`translateY(${scrollY*0.02}px)`;
 });
 
-/* GALLERY FUNCTIONALITY */
+/* GALLERY */
 const galleryImages=document.querySelectorAll('.gallery img');
 const thumbs=document.querySelectorAll('.thumbnails img');
 let currentIndex=0;
-
 function showImage(index){
   galleryImages.forEach((img,i)=>img.classList.toggle('active',i===index));
   thumbs.forEach((thumb,i)=>thumb.classList.toggle('active-thumb',i===index));
   currentIndex=index;
 }
-
-document.querySelector('.arrow.left').addEventListener('click',()=>{
-  showImage((currentIndex-1+galleryImages.length)%galleryImages.length);
-});
-document.querySelector('.arrow.right').addEventListener('click',()=>{
-  showImage((currentIndex+1)%galleryImages.length);
-});
-
+document.querySelector('.arrow.left').addEventListener('click',()=>{showImage((currentIndex-1+galleryImages.length)%galleryImages.length);});
+document.querySelector('.arrow.right').addEventListener('click',()=>{showImage((currentIndex+1)%galleryImages.length);});
 thumbs.forEach((thumb,i)=>thumb.addEventListener('click',()=>showImage(i)));
-
-/* OPTIONAL AUTO SLIDE */
-// setInterval(()=>showImage((currentIndex+1)%galleryImages.length),5000);
 </script>
 </body>
 </html>
