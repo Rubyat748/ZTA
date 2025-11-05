@@ -127,23 +127,28 @@ section p{color:#ccc;text-align:center;max-width:900px;margin:0 auto 36px;line-h
 .thumbnails img.active-thumb{opacity:1;border:2px solid #8ab4ff;transform:scale(1.05);box-shadow:0 0 10px #8ab4ff;}
 .thumbnails img:hover{opacity:1;transform:scale(1.05);}
 
-/* ================== CONTACT ================== */
+/* ================== CONTACT FORM ================== */
 .contact-form{display:flex;flex-direction:column;max-width:600px;margin:0 auto;}
 .contact-form input,.contact-form textarea{
-  margin-bottom:14px;padding:12px;border-radius:10px;border:none;
-  background:rgba(255,255,255,.08);color:#fff;transition: background .3s, transform .3s;
+  margin-bottom:14px;padding:14px;border-radius:12px;border:none;
+  background:rgba(255,255,255,.08);color:#fff;transition: background .3s, transform .3s, box-shadow .3s;
+  font-size:1rem;
 }
-.contact-form input:focus,.contact-form textarea:focus{background:rgba(255,255,255,.15);outline:none;transform:scale(1.02);}
+.contact-form input:focus,.contact-form textarea:focus{
+  background:rgba(255,255,255,.15);outline:none;transform:scale(1.02);
+  box-shadow:0 0 10px #8ab4ff;
+}
 .contact-form button{
-  padding:12px;background:#8ab4ff;border:none;border-radius:10px;
+  padding:14px;background:#8ab4ff;border:none;border-radius:12px;
   font-weight:700;cursor:pointer;transition: background .3s, transform .3s, box-shadow .3s;
+  font-size:1rem;
 }
 .contact-form button:hover{background:#6fa0ff;transform: scale(1.05);box-shadow:0 0 15px #8ab4ff;}
 
 /* ================== FOOTER ================== */
 footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
 
-/* ================== MEDIA QUERIES ================== */
+/* ================== MEDIA ================== */
 @media(max-width:768px){.gallery{height:320px;} .hero p{font-size:1.2rem;}}
 @media(max-width:480px){nav a{margin:6px 0;} .thumbnails img{width:60px;height:45px;}}
 </style>
@@ -191,17 +196,9 @@ footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
   <div class="gallery">
     <div class="arrow left">&#10094;</div>
     <div class="arrow right">&#10095;</div>
-    <img src="assets/image1.jpg" class="active" alt="Gallery 1">
-    <img src="assets/image2.jpg" alt="Gallery 2">
-    <img src="assets/image3.jpg" alt="Gallery 3">
-    <img src="assets/image4.jpg" alt="Gallery 4">
+    <!-- Images will be loaded from assets/gallery/1.jpg etc -->
   </div>
-  <div class="thumbnails">
-    <img src="assets/image1.jpg" class="active-thumb">
-    <img src="assets/image2.jpg">
-    <img src="assets/image3.jpg">
-    <img src="assets/image4.jpg">
-  </div>
+  <div class="thumbnails"></div>
 </section>
 
 <div class="divider"></div>
@@ -290,9 +287,19 @@ window.addEventListener('scroll',()=>{
   document.querySelector('.nebula').style.transform=`translateY(${scrollY*0.02}px)`;
 });
 
-/* GALLERY */
-const galleryImages=document.querySelectorAll('.gallery img');
-const thumbs=document.querySelectorAll('.thumbnails img');
+/* GALLERY LOAD DYNAMICALLY */
+const galleryContainer=document.querySelector('.gallery');
+const thumbContainer=document.querySelector('.thumbnails');
+const galleryCount=6; // number of images in assets/gallery/
+let galleryImages=[], thumbs=[];
+for(let i=1;i<=galleryCount;i++){
+  const img=document.createElement('img'); img.src=`assets/gallery/${i}.jpg`;
+  if(i===1)img.classList.add('active'); galleryContainer.appendChild(img); galleryImages.push(img);
+
+  const thumb=document.createElement('img'); thumb.src=`assets/gallery/${i}.jpg`;
+  if(i===1)thumb.classList.add('active-thumb'); thumbContainer.appendChild(thumb); thumbs.push(thumb);
+}
+
 let currentIndex=0;
 function showImage(index){
   galleryImages.forEach((img,i)=>img.classList.toggle('active',i===index));
