@@ -20,13 +20,13 @@ body{
   perspective:1000px;
 }
 
-/* FIXED BACKGROUND USING BASE64 - NO ZOOM ANIMATION */
+/* FIXED BACKGROUND FROM ASSETS - NO ZOOM */
 body::before{
   content:"";
   position:fixed;
   top:0; left:0;
   width:100%; height:100%;
-  background: url('data:image/png;base64,/9j/4QBeRXhpZgAA...') center/cover no-repeat;
+  background: url('assets/background.png') center/cover no-repeat;
   z-index:-5;
   pointer-events:none;
 }
@@ -138,7 +138,7 @@ footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
 <div class="comet"></div>
 
 <header>
-  <img src="data:image/png;base64,/9j/4QBeRXhpZgAATU0AKgAAAAgA..." alt="ZTA Logo">
+  <img src="assets/logo.png" alt="ZTA Logo">
   <nav>
     <a href="#home">Home</a>
     <a href="#about">About</a>
