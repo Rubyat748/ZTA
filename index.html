@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ZTA - Ultimate Astrophotography</title>
 
-<!-- Google Fonts -->
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet">
@@ -15,34 +15,20 @@
 /* RESET & BODY STYLING */
 /* ==================================================== */
 *{margin:0;padding:0;box-sizing:border-box;}
-body{
-  font-family:'Segoe UI',Roboto,sans-serif;
-  color:#fff;
-  background:#0b0b0b;
-  overflow-x:hidden;
-  scroll-behavior:smooth;
-}
+body{font-family:'Segoe UI',Roboto,sans-serif;color:#fff;background:#0b0b0b;overflow-x:hidden;scroll-behavior:smooth;}
 
 /* ==================================================== */
-/* HEADER STYLING */
+/* HEADER */
 /* ==================================================== */
-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:18px;position:sticky;top:0;background:rgba(0,0,0,.7);
-  backdrop-filter:blur(6px);z-index:100;
-}
-header img{height:56px;transition: transform .3s;}
-header img:hover{transform:rotate(-5deg);}
+header{display:flex;align-items:center;justify-content:space-between;padding:18px;position:sticky;top:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:100;}
+header img{height:56px;transition: transform .3s;} header img:hover{transform:rotate(-5deg);}
 nav a{margin-left:18px;color:#fff;text-decoration:none;font-weight:600;transition:color .3s;}
 nav a:hover{color:#8ab4ff;}
 
 /* ==================================================== */
 /* HERO SECTION */
 /* ==================================================== */
-.hero{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-  min-height:80vh;padding:28px;overflow:hidden;
-}
+.hero{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:80vh;padding:28px;overflow:hidden;}
 .hero h1,.hero p{font-family:"Caveat Brush",cursive;font-weight:400;margin-bottom:12px;}
 .hero h1{font-size:clamp(28px,6vw,64px);}
 .hero p{color:#ccc;margin-bottom:18px;font-size:1.5rem;}
@@ -60,7 +46,7 @@ section p{color:#ccc;text-align:center;max-width:900px;margin:0 auto 36px;line-h
 .divider{width:100%;height:4px;background:linear-gradient(to right,#8ab4ff,transparent,#8ab4ff);margin:40px 0;border-radius:4px;}
 
 /* ==================================================== */
-/* GALLERY STYLING */
+/* GALLERY */
 /* ==================================================== */
 .gallery{position:relative;max-width:1000px;height:520px;margin:0 auto;border-radius:20px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.25);box-shadow:0 0 20px rgba(138,180,255,0.2);}
 .gallery img{position:absolute;width:100%;height:100%;object-fit:cover;border-radius:20px;opacity:0;transition:opacity 1s ease, transform 1s;}
@@ -72,13 +58,19 @@ section p{color:#ccc;text-align:center;max-width:900px;margin:0 auto 36px;line-h
 .thumbnails img.active-thumb{opacity:1;border:2px solid #8ab4ff;}
 
 /* ==================================================== */
-/* CONTACT FORM */
+/* CONTACT FORM ENHANCED */
 /* ==================================================== */
-.contact-form{display:flex;flex-direction:column;max-width:600px;margin:0 auto;}
-.contact-form input,.contact-form textarea{margin-bottom:14px;padding:12px;border-radius:10px;border:none;background:rgba(255,255,255,.08);color:#fff;transition: background .3s;}
-.contact-form input:focus,.contact-form textarea:focus{background:rgba(255,255,255,.15);outline:none;}
-.contact-form button{padding:12px;background:#8ab4ff;border:none;border-radius:10px;font-weight:700;cursor:pointer;}
-.contact-form button:hover{background:#6fa0ff;box-shadow:0 0 15px #8ab4ff;}
+#contact-glass{position:relative;padding:40px 30px;border-radius:20px;background:rgba(0,0,0,0.5);backdrop-filter:blur(10px);box-shadow:0 0 30px rgba(138,180,255,0.3);overflow:hidden;transition: transform 0.4s ease, box-shadow 0.4s ease;}
+#contact-glass:hover{transform: translateY(-6px);box-shadow:0 0 50px rgba(138,180,255,0.5);}
+#contact-glass input, #contact-glass textarea{margin-bottom:16px;padding:14px;border-radius:12px;border:none;background:rgba(255,255,255,0.08);color:#fff;font-size:1rem;transition: background .3s, box-shadow .3s;}
+#contact-glass input:focus, #contact-glass textarea:focus{background:rgba(255,255,255,0.15);box-shadow:0 0 12px #8ab4ff;outline:none;}
+#contact-glass button{padding:14px;background:#8ab4ff;border:none;border-radius:12px;font-weight:700;cursor:pointer;transition: all 0.3s;}
+#contact-glass button:hover{transform: scale(1.05);background:#6fa0ff;box-shadow:0 0 20px #8ab4ff;}
+#contact-glass::before, #contact-glass::after{content:"";position:absolute;width:15px;height:15px;background:rgba(138,180,255,0.3);border-radius:50%;top:10%;left:20%;animation: floatParticles 6s infinite alternate;}
+#contact-glass::after{top:70%;left:80%;width:10px;height:10px;animation-duration:5s;}
+@keyframes floatParticles{0%{transform: translateY(0) translateX(0);}50%{transform: translateY(-15px) translateX(10px);}100%{transform: translateY(0) translateX(0);}}
+
+.form-success{display:none;color:#8ab4ff;text-align:center;margin-top:12px;font-weight:700;font-family:'Caveat Brush', cursive;}
 
 /* ==================================================== */
 /* FOOTER */
@@ -86,20 +78,11 @@ section p{color:#ccc;text-align:center;max-width:900px;margin:0 auto 36px;line-h
 footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
 
 /* ==================================================== */
-/* STARS & COMETS */
+/* STARS, PARTICLES, SHOOTING STARS */
 /* ==================================================== */
 .stars, .particles, .shooting-star{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}
 .stars div, .particles div{position:absolute;background:white;border-radius:50%;}
 .comet{position:absolute;width:2px;height:60px;background:linear-gradient(white,transparent);opacity:0.8;border-radius:50%;pointer-events:none;}
-
-/* ==================================================== */
-/* SCROLL REVEAL */
-/* ==================================================== */
-section.visible{opacity:1;transform:translateY(0);transition:opacity 1s, transform 1s;}
-
-/* ==================================================== */
-/* MOUSE FOLLOW STARS */
-/* ==================================================== */
 .particle{position:absolute;background:white;border-radius:50%;width:2px;height:2px;pointer-events:none;}
 </style>
 </head>
@@ -153,13 +136,14 @@ section.visible{opacity:1;transform:translateY(0);transition:opacity 1s, transfo
 <!-- CONTACT -->
 <section id="contact">
   <h2>Contact</h2>
-  <div class="contact-form glass">
-    <form action="https://formspree.io/f/meopyjgn" method="POST">
+  <div class="contact-form glass" id="contact-glass">
+    <form id="contactForm" action="https://formspree.io/f/meopyjgn" method="POST">
       <input type="text" name="name" placeholder="Your Name" required>
       <input type="email" name="email" placeholder="Your Email" required>
       <textarea rows="5" name="message" placeholder="Your Message" required></textarea>
       <button type="submit">Send Message</button>
     </form>
+    <div class="form-success" id="formSuccess">Message Sent Successfully!</div>
   </div>
 </section>
 
@@ -235,15 +219,11 @@ setInterval(createShootingStar,4000);
   }
   let autoSlide=setInterval(()=>{index=(index+1)%imgs.length;showImage(index);},slideTime);
   container.querySelector('.arrow.left').addEventListener('click',()=>{
-    clearInterval(autoSlide);
-    index=(index-1+imgs.length)%imgs.length;
-    showImage(index);
+    clearInterval(autoSlide);index=(index-1+imgs.length)%imgs.length;showImage(index);
     autoSlide=setInterval(()=>{index=(index+1)%imgs.length;showImage(index);},slideTime);
   });
   container.querySelector('.arrow.right').addEventListener('click',()=>{
-    clearInterval(autoSlide);
-    index=(index+1)%imgs.length;
-    showImage(index);
+    clearInterval(autoSlide);index=(index+1)%imgs.length;showImage(index);
     autoSlide=setInterval(()=>{index=(index+1)%imgs.length;showImage(index);},slideTime);
   });
   thumbs.forEach((thumb,i)=>{thumb.addEventListener('click',()=>{clearInterval(autoSlide);showImage(i);autoSlide=setInterval(()=>{index=(index+1)%imgs.length;showImage(index);},slideTime);});});
@@ -265,9 +245,20 @@ const mouseStars=[];
 document.addEventListener('mousemove',e=>{
   const star=document.createElement('div');star.className='particle';
   star.style.left=e.clientX+'px';star.style.top=e.clientY+'px';
-  document.body.appendChild(star);
-  mouseStars.push(star);
+  document.body.appendChild(star);mouseStars.push(star);
   if(mouseStars.length>30){let old=mouseStars.shift();old.remove();}
+});
+
+// ====================================================
+// CONTACT FORM SUBMISSION
+// ====================================================
+const contactForm=document.getElementById('contactForm');
+const formSuccess=document.getElementById('formSuccess');
+contactForm.addEventListener('submit',function(e){
+  e.preventDefault();
+  fetch(contactForm.action,{method:'POST',body:new FormData(contactForm),headers:{'Accept':'application/json'}})
+  .then(response=>{if(response.ok){formSuccess.style.display='block';contactForm.reset();setTimeout(()=>{formSuccess.style.display='none';},4000);} else {alert('Oops! Something went wrong.');}})
+  .catch(()=>alert('Oops! Something went wrong.'));
 });
 </script>
 
