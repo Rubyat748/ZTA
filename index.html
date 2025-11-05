@@ -21,7 +21,7 @@ body{
   background:#000;
 }
 
-/* ================== FIXED BACKGROUND ================== */
+/* ================== BACKGROUND ================== */
 body::before{
   content:"";
   position:fixed;
@@ -109,7 +109,6 @@ section p{color:#ccc;text-align:center;max-width:900px;margin:0 auto 36px;line-h
   transform: scale(1);
 }
 .gallery img.active{opacity:1;z-index:1;box-shadow:0 0 20px #8ab4ff;}
-.gallery img:hover{transform:scale(1.05);box-shadow:0 0 25px #8ab4ff;}
 .gallery .arrow{
   position:absolute;top:50%;transform:translateY(-50%);
   font-size:40px;color:#fff;cursor:pointer;background:rgba(0,0,0,0.3);
@@ -196,7 +195,6 @@ footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
   <div class="gallery">
     <div class="arrow left">&#10094;</div>
     <div class="arrow right">&#10095;</div>
-    <!-- Images will be loaded from assets/gallery/1.jpg etc -->
   </div>
   <div class="thumbnails"></div>
 </section>
@@ -218,7 +216,7 @@ footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
 <footer>&copy; 2025 ZTA | All Rights Reserved</footer>
 
 <script>
-/* HERO TEXT TYPING */
+/* HERO TYPING */
 const heroTitle="ZTA", heroSubtitle="Exploring the Universe Through My Lens";
 let i=0,j=0;
 function typeWriter(){
@@ -227,88 +225,77 @@ function typeWriter(){
 }
 typeWriter();
 
-/* SECTION REVEAL */
+/* SCROLL REVEAL */
 const sections=document.querySelectorAll('section');
 window.addEventListener('scroll',()=>{
   sections.forEach(section=>{
-    if(section.getBoundingClientRect().top < window.innerHeight-100)
-      section.classList.add('visible');
+    if(section.getBoundingClientRect().top < window.innerHeight-100) section.classList.add('visible');
   });
 });
 
 /* STARS, PARTICLES, SHOOTING STARS */
 const starsContainer=document.querySelector('.stars');
-for(let k=0;k<100;k++){
-  const star=document.createElement('div');star.className='star';
-  star.style.width=star.style.height=Math.random()*2+1+'px';
-  star.style.top=Math.random()*100+'%'; star.style.left=Math.random()*100+'%';
-  star.style.animationDuration=(Math.random()*3+2)+'s'; starsContainer.appendChild(star);
-}
+for(let k=0;k<100;k++){const star=document.createElement('div');star.className='star';star.style.width=star.style.height=Math.random()*2+1+'px';star.style.top=Math.random()*100+'%';star.style.left=Math.random()*100+'%';star.style.animationDuration=(Math.random()*3+2)+'s';starsContainer.appendChild(star);}
 const particlesContainer=document.querySelector('.particles');
-for(let k=0;k<150;k++){
-  const p=document.createElement('div');p.className='particle';
-  p.style.top=Math.random()*100+'%';p.style.left=Math.random()*100+'%';
-  p.style.width=p.style.height=Math.random()*2+1+'px';particlesContainer.appendChild(p);
-}
+for(let k=0;k<150;k++){const p=document.createElement('div');p.className='particle';p.style.top=Math.random()*100+'%';p.style.left=Math.random()*100+'%';p.style.width=p.style.height=Math.random()*2+1+'px';particlesContainer.appendChild(p);}
 const shootingContainer=document.querySelector('.shooting-star');
-function createShootingStar(){
-  const star=document.createElement('div');star.style.top=Math.random()*50+'%';star.style.left='-10%';
-  shootingContainer.appendChild(star);
-  star.animate([{transform:'translateX(0)'},{transform:'translateX(120vw)'}],{duration:3000,easing:'linear'});
-  setTimeout(()=>star.remove(),3000);
-}
+function createShootingStar(){const star=document.createElement('div');star.style.top=Math.random()*50+'%';star.style.left='-10%';shootingContainer.appendChild(star);star.animate([{transform:'translateX(0)'},{transform:'translateX(120vw)'}],{duration:3000,easing:'linear'});setTimeout(()=>star.remove(),3000);}
 setInterval(createShootingStar,4000);
 
-/* NEBULA CANVAS */
-const nebulaCanvas=document.getElementById('nebula-canvas');
-const nctx=nebulaCanvas.getContext('2d');
+/* NEBULA */
+const nebulaCanvas=document.getElementById('nebula-canvas');const nctx=nebulaCanvas.getContext('2d');
 function resizeCanvas(){nebulaCanvas.width=window.innerWidth;nebulaCanvas.height=window.innerHeight;}
 resizeCanvas();window.addEventListener('resize',resizeCanvas);
 let particlesArr=[];
 for(let k=0;k<200;k++){particlesArr.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,radius:Math.random()*2+1,speedX:(Math.random()-0.5)*0.2,speedY:(Math.random()-0.5)*0.2});}
-function animateNebula(){
-  nctx.clearRect(0,0,nebulaCanvas.width,nebulaCanvas.height);
-  particlesArr.forEach(p=>{
-    nctx.beginPath();nctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
-    nctx.fillStyle='rgba(138,180,255,0.3)';nctx.fill();
-    p.x+=p.speedX;p.y+=p.speedY;
-    if(p.x<0)p.x=nebulaCanvas.width;if(p.x>nebulaCanvas.width)p.x=0;
-    if(p.y<0)p.y=nebulaCanvas.height;if(p.y>nebulaCanvas.height)p.y=0;
-  });
-  requestAnimationFrame(animateNebula);
-}
+function animateNebula(){nctx.clearRect(0,0,nebulaCanvas.width,nebulaCanvas.height);particlesArr.forEach(p=>{nctx.beginPath();nctx.arc(p.x,p.y,p.radius,0,Math.PI*2);nctx.fillStyle='rgba(138,180,255,0.3)';nctx.fill();p.x+=p.speedX;p.y+=p.speedY;if(p.x<0)p.x=nebulaCanvas.width;if(p.x>nebulaCanvas.width)p.x=0;if(p.y<0)p.y=nebulaCanvas.height;if(p.y>nebulaCanvas.height)p.y=0;});requestAnimationFrame(animateNebula);}
 animateNebula();
 
 /* PARALLAX */
-window.addEventListener('scroll',()=>{
-  const scrollY=window.scrollY;
-  document.querySelector('.stars').style.transform=`translateY(${scrollY*0.05}px)`;
-  document.querySelector('.particles').style.transform=`translateY(${scrollY*0.03}px)`;
-  document.querySelector('.nebula').style.transform=`translateY(${scrollY*0.02}px)`;
-});
+window.addEventListener('scroll',()=>{const scrollY=window.scrollY;document.querySelector('.stars').style.transform=`translateY(${scrollY*0.05}px)`;document.querySelector('.particles').style.transform=`translateY(${scrollY*0.03}px)`;document.querySelector('.nebula').style.transform=`translateY(${scrollY*0.02}px)`;});
 
-/* GALLERY LOAD DYNAMICALLY */
-const galleryContainer=document.querySelector('.gallery');
-const thumbContainer=document.querySelector('.thumbnails');
-const galleryCount=6; // number of images in assets/gallery/
+/* GALLERY AUTO LOAD & SLIDE */
+const galleryContainer=document.querySelector('.gallery');const thumbContainer=document.querySelector('.thumbnails');
 let galleryImages=[], thumbs=[];
-for(let i=1;i<=galleryCount;i++){
-  const img=document.createElement('img'); img.src=`assets/gallery/${i}.jpg`;
-  if(i===1)img.classList.add('active'); galleryContainer.appendChild(img); galleryImages.push(img);
+let currentIndex=0;
 
-  const thumb=document.createElement('img'); thumb.src=`assets/gallery/${i}.jpg`;
-  if(i===1)thumb.classList.add('active-thumb'); thumbContainer.appendChild(thumb); thumbs.push(thumb);
+function loadGalleryImages(){
+  let i=1;
+  function tryLoad(){
+    const img=new Image();
+    img.src=`assets/gallery/${i}.jpg`;
+    img.onload=()=>{
+      img.classList.add('gallery-img');
+      if(i===1)img.classList.add('active');
+      galleryContainer.appendChild(img);
+      galleryImages.push(img);
+
+      const th=new Image();
+      th.src=img.src;th.classList.add('thumb');
+      if(i===1)th.classList.add('active-thumb');
+      thumbContainer.appendChild(th); thumbs.push(th);
+      th.addEventListener('click',()=>{showImage(i-1);});
+
+      i++; tryLoad(); // try next image
+    };
+    img.onerror=()=>{}; // stop if image not found
+  }
+  tryLoad();
 }
 
-let currentIndex=0;
 function showImage(index){
   galleryImages.forEach((img,i)=>img.classList.toggle('active',i===index));
-  thumbs.forEach((thumb,i)=>thumb.classList.toggle('active-thumb',i===index));
+  thumbs.forEach((th,i)=>th.classList.toggle('active-thumb',i===index));
   currentIndex=index;
 }
+
 document.querySelector('.arrow.left').addEventListener('click',()=>{showImage((currentIndex-1+galleryImages.length)%galleryImages.length);});
 document.querySelector('.arrow.right').addEventListener('click',()=>{showImage((currentIndex+1)%galleryImages.length);});
-thumbs.forEach((thumb,i)=>thumb.addEventListener('click',()=>showImage(i)));
+
+// Auto slide every 4s
+setInterval(()=>{if(galleryImages.length>0){currentIndex=(currentIndex+1)%galleryImages.length;showImage(currentIndex);}},4000);
+
+loadGalleryImages();
 </script>
 </body>
 </html>
