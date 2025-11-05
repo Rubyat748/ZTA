@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ZTA - Astrophotography</title>
+
+<!-- Google Fonts: Caveat Brush -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet">
+
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
   body{
@@ -11,6 +17,13 @@
     color:#fff;
     background:#000 url('assets/background.png') center/cover no-repeat;
     scroll-behavior:smooth;
+  }
+
+  /* Apply Caveat Brush to headings */
+  .caveat-brush-regular{
+    font-family: "Caveat Brush", cursive;
+    font-weight: 400;
+    font-style: normal;
   }
 
   /* Header */
@@ -67,14 +80,26 @@
   }
   .gallery img{
     position:absolute;width:100%;height:100%;object-fit:cover;
-    border-radius:20px;opacity:0;transition:opacity 1s ease-in-out, transform 1s ease;
-    transform: scale(1.1);
+    border-radius:20px;opacity:0;transition:opacity 1s ease, transform 1s ease;
+    transform: scale(1.1);z-index:0;
   }
   .gallery img.active{
-    opacity:1;transform: scale(1);
+    opacity:1;transform: scale(1);z-index:1;
   }
+
+  /* Navigation Arrows */
+  .gallery .arrow{
+    position:absolute;top:50%;transform:translateY(-50%);
+    font-size:40px;color:#fff;cursor:pointer;
+    background:rgba(0,0,0,0.3);padding:8px;border-radius:50%;
+    user-select:none;transition: background .3s, transform .3s;
+  }
+  .gallery .arrow:hover{background:rgba(0,0,0,0.5);transform:translateY(-50%) scale(1.1);}
+  .gallery .arrow.left{left:20px;}
+  .gallery .arrow.right{right:20px;}
   @media(max-width:768px){
     .gallery{height:320px;}
+    .gallery .arrow{font-size:30px;left:10px;right:10px;}
   }
 
   /* Contact Form */
@@ -99,10 +124,7 @@
   footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
 
   /* Animations */
-  @keyframes fadeIn{
-    from{opacity:0;}
-    to{opacity:1;}
-  }
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 </style>
 </head>
 <body>
@@ -118,8 +140,8 @@
 </header>
 
 <section class="hero" id="home">
-  <h1>ZTA</h1>
-  <p>Exploring the Universe Through My Lens</p>
+  <h1 class="caveat-brush-regular">ZTA</h1>
+  <p class="caveat-brush-regular">Exploring the Universe Through My Lens</p>
   <a href="https://youtube.com/@zta" target="_blank">
     <button class="btn-subscribe">Subscribe</button>
   </a>
@@ -127,21 +149,23 @@
 
 <section id="about">
   <div class="glass">
-    <h2>About ZTA</h2>
+    <h2 class="caveat-brush-regular">About ZTA</h2>
     <p>ZTA is a YouTube channel dedicated to capturing the beauty of the night sky.
        From breathtaking galaxies to stunning lunar shots, we explore astrophotography like never before.</p>
   </div>
 </section>
 
 <section id="gallery">
-  <h2>Gallery</h2>
+  <h2 class="caveat-brush-regular">Gallery</h2>
   <div class="gallery" id="gallery-container">
     <p>Loading gallery...</p>
+    <div class="arrow left">&#10094;</div>
+    <div class="arrow right">&#10095;</div>
   </div>
 </section>
 
 <section id="contact">
-  <h2>Contact</h2>
+  <h2 class="caveat-brush-regular">Contact</h2>
   <div class="contact-form glass">
     <form action="https://formspree.io/f/meopyjgn" method="POST">
       <input type="text" name="name" placeholder="Your Name" required>
@@ -158,7 +182,6 @@
 (async function(){
   const container = document.getElementById('gallery-container');
   const loadingText = container.querySelector('p');
-
   const folder = 'assets/gallery/';
   const ext = '.jpg';
   const maxTry = 200;
@@ -192,12 +215,34 @@
   let index = 0;
   imgs[index].classList.add('active');
 
-  setInterval(()=>{
-    imgs[index].classList.remove('active');
+  const showImage = (i)=>{
+    imgs.forEach(img=>img.classList.remove('active'));
+    imgs[i].classList.add('active');
+  }
+
+  let autoSlide = setInterval(()=>{
     index = (index+1) % imgs.length;
-    imgs[index].classList.add('active');
-  },slideTime);
+    showImage(index);
+  }, slideTime);
+
+  const leftArrow = container.querySelector('.arrow.left');
+  const rightArrow = container.querySelector('.arrow.right');
+
+  leftArrow.addEventListener('click',()=>{
+    clearInterval(autoSlide);
+    index = (index-1+imgs.length) % imgs.length;
+    showImage(index);
+    autoSlide = setInterval(()=>{ index = (index+1) % imgs.length; showImage(index); }, slideTime);
+  });
+
+  rightArrow.addEventListener('click',()=>{
+    clearInterval(autoSlide);
+    index = (index+1) % imgs.length;
+    showImage(index);
+    autoSlide = setInterval(()=>{ index = (index+1) % imgs.length; showImage(index); }, slideTime);
+  });
 })();
 </script>
 </body>
 </html>
+
