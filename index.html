@@ -11,7 +11,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet">
 
 <style>
-/* ---------- Reset ---------- */
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
   font-family:'Segoe UI',Roboto,sans-serif;
@@ -26,12 +25,16 @@ body{
 body::before{
   content:"";position:fixed;top:0;left:0;width:100%;height:100%;
   background:transparent url('assets/background.png') center/cover no-repeat;
-  z-index:-3;animation: bgZoom 60s linear infinite;
+  z-index:-4;animation: bgZoom 60s linear infinite;
 }
 @keyframes bgZoom{0%{transform:scale(1);}50%{transform:scale(1.02);}100%{transform:scale(1);}}
-.stars, .shooting-star{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-2;}
+
+.stars, .shooting-star, .particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-3;}
 .star{position:absolute;background:white;border-radius:50%;animation: twinkle 2s infinite alternate;}
 @keyframes twinkle{from{opacity:0.2;}to{opacity:1;}}
+
+/* Particle animation */
+.particle{position:absolute;width:2px;height:2px;background:white;border-radius:50%;opacity:0.6;}
 
 /* ---------- Header ---------- */
 header{
@@ -43,8 +46,7 @@ header img{height:56px;transition: transform .3s;}
 header img:hover{transform:rotate(-5deg);}
 nav a{
   margin-left:18px;color:#fff;text-decoration:none;font-weight:600;
-  transition: color .3s, transform .3s;
-  position:relative;
+  transition: color .3s, transform .3s;position:relative;
 }
 nav a:hover{color:#8ab4ff;transform:scale(1.05);}
 nav a::after{
@@ -59,16 +61,10 @@ nav a:hover::after{opacity:1;transform:rotate(20deg);}
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;min-height:80vh;padding:28px;overflow:hidden;
 }
-.hero h1, .hero p{
-  font-family:"Caveat Brush",cursive;font-weight:400;font-style:normal;margin-bottom:12px;
-}
+.hero h1, .hero p{font-family:"Caveat Brush",cursive;font-weight:400;font-style:normal;margin-bottom:12px;}
 .hero h1{font-size:clamp(28px,6vw,64px);}
 .hero p{color:#ccc;margin-bottom:18px;font-size:1.5rem;}
-.btn-subscribe{
-  padding:10px 20px;background:#8ab4ff;color:#000;
-  border-radius:12px;border:none;font-weight:700;cursor:pointer;
-  transition: transform .3s, background .3s;
-}
+.btn-subscribe{padding:10px 20px;background:#8ab4ff;color:#000;border-radius:12px;border:none;font-weight:700;cursor:pointer;transition: transform .3s, background .3s;}
 .btn-subscribe:hover{transform: scale(1.05); background:#6fa0ff;}
 
 /* ---------- Sections ---------- */
@@ -77,17 +73,18 @@ section{
   opacity:0;
   transform:translateY(50px);
   transition:opacity 1s, transform 1s;
+  position:relative;
 }
 section.visible{opacity:1;transform:translateY(0);}
-section h2{
-  text-align:center;font-size:32px;margin-bottom:18px;
-  font-family:"Caveat Brush",cursive;
-}
+section h2{text-align:center;font-size:32px;margin-bottom:18px;font-family:"Caveat Brush",cursive;}
 section p{color:#ccc;text-align:center;max-width:900px;margin:0 auto 36px;}
 .glass{
   background:rgba(0,0,0,.45);backdrop-filter:blur(8px);
   border-radius:16px;padding:26px;max-width:1000px;margin:0 auto;
 }
+
+/* Cosmic divider */
+.divider{width:100%;height:4px;background:linear-gradient(to right,#8ab4ff,transparent,#8ab4ff);margin:40px 0;border-radius:4px;}
 
 /* ---------- Gallery ---------- */
 .gallery{
@@ -114,29 +111,16 @@ section p{color:#ccc;text-align:center;max-width:900px;margin:0 auto 36px;}
 @media(max-width:768px){.gallery{height:320px;}.gallery .arrow{font-size:30px;left:10px;right:10px;}}
 
 /* ---------- Thumbnails ---------- */
-.thumbnails{
-  display:flex;overflow-x:auto;margin:12px auto 0;
-  max-width:1000px;gap:8px;padding-bottom:6px;
-}
-.thumbnails img{
-  width:80px;height:60px;object-fit:cover;border-radius:8px;
-  cursor:pointer;opacity:0.6;transition:opacity .3s, transform .3s;
-}
+.thumbnails{display:flex;overflow-x:auto;margin:12px auto 0;max-width:1000px;gap:8px;padding-bottom:6px;}
+.thumbnails img{width:80px;height:60px;object-fit:cover;border-radius:8px;cursor:pointer;opacity:0.6;transition:opacity .3s, transform .3s;}
 .thumbnails img.active-thumb{opacity:1;border:2px solid #8ab4ff;transform:scale(1.05);}
 .thumbnails img:hover{opacity:1;}
 
 /* ---------- Contact Form ---------- */
 .contact-form{display:flex;flex-direction:column;max-width:600px;margin:0 auto;}
-.contact-form input,.contact-form textarea{
-  margin-bottom:14px;padding:12px;border-radius:10px;border:none;
-  background:rgba(255,255,255,.08);color:#fff;transition: background .3s;
-}
+.contact-form input,.contact-form textarea{margin-bottom:14px;padding:12px;border-radius:10px;border:none;background:rgba(255,255,255,.08);color:#fff;transition: background .3s;}
 .contact-form input:focus,.contact-form textarea:focus{background:rgba(255,255,255,.15);outline:none;}
-.contact-form button{
-  padding:12px;background:#8ab4ff;border:none;
-  border-radius:10px;font-weight:700;cursor:pointer;
-  transition: background .3s, transform .3s;
-}
+.contact-form button{padding:12px;background:#8ab4ff;border:none;border-radius:10px;font-weight:700;cursor:pointer;transition: background .3s, transform .3s;}
 .contact-form button:hover{background:#6fa0ff;transform: scale(1.05);}
 
 /* ---------- Footer ---------- */
@@ -145,9 +129,10 @@ footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
 </head>
 <body>
 
-<!-- Stars -->
+<!-- Stars + Particles -->
 <div class="stars"></div>
 <div class="shooting-star"></div>
+<div class="particles"></div>
 
 <header>
   <img src="assets/logo.png" alt="ZTA Logo">
@@ -167,6 +152,8 @@ footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
   </a>
 </section>
 
+<div class="divider"></div>
+
 <section id="about">
   <div class="glass">
     <h2>About ZTA</h2>
@@ -174,6 +161,8 @@ footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
        From breathtaking galaxies to stunning lunar shots, we explore astrophotography like never before.</p>
   </div>
 </section>
+
+<div class="divider"></div>
 
 <section id="gallery">
   <h2>Gallery</h2>
@@ -184,6 +173,8 @@ footer{text-align:center;padding:18px;background:rgba(0,0,0,.6);color:#aaa;}
   </div>
   <div class="thumbnails" id="gallery-thumbnails"></div>
 </section>
+
+<div class="divider"></div>
 
 <section id="contact">
   <h2>Contact</h2>
@@ -257,8 +248,16 @@ function createShootingStar(){
 }
 setInterval(createShootingStar,4000);
 
+/* ---------- Particles ---------- */
+const particlesContainer=document.querySelector('.particles');
+for(let i=0;i<150;i++){
+  const p=document.createElement('div');p.className='particle';
+  p.style.top=Math.random()*100+'%';p.style.left=Math.random()*100+'%';p.style.width=p.style.height=Math.random()*2+1+'px';
+  particlesContainer.appendChild(p);
+}
+
 /* ---------- Parallax stars ---------- */
-window.addEventListener('scroll',()=>{const scrollY=window.scrollY;starsContainer.style.transform=`translateY(${scrollY*0.1}px)`;shootingContainer.style.transform=`translateY(${scrollY*0.05}px)`;});
+window.addEventListener('scroll',()=>{const scrollY=window.scrollY;starsContainer.style.transform=`translateY(${scrollY*0.1}px)`;shootingContainer.style.transform=`translateY(${scrollY*0.05}px)`;particlesContainer.style.transform=`translateY(${scrollY*0.03}px)`;});
 </script>
 </body>
 </html>
