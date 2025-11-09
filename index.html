@@ -1,585 +1,439 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZTA • Elite Astrophotography & ExoPlanet Atlas</title>
-
-<!-- Preload Critical Assets -->
-<link rel="preload" href="assets/background.png" as="image">
-<link rel="preload" href="assets/logo.png" as="image">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZTA • Observatory</title>
 
 <!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@300;400;600;700&family=Caveat+Brush&family=Exo+2:wght@900&display=swap" rel="stylesheet">
-
-<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-/* ================== ULTRA-ELITE THEME ================== */
+/* ================== OBSERVATORY THEME ================== */
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --bg: #000;
-  --text: #fff;
-  --accent: #00eeff;
-  --accent-dark: #00b8cc;
-  --gold: #ffd700;
-  --glass: rgba(5,10,25,0.7);
-  --glass-border: rgba(0,238,255,0.25);
-  --shadow: 0 15px 50px rgba(0,238,255,0.2);
-  --transition: all 0.5s cubic-bezier(0.23,1,0.32,1);
-  --click-glow: 0 0 60px rgba(0,238,255,0.8);
+  --space:#0b0b1f;
+  --cyan:#00ffff;
+  --gold:#ffcc00;
+  --glass:rgba(15,20,45,0.65);
+  --border:rgba(0,255,255,0.3);
+  --glow:0 0 30px rgba(0,255,255,0.6);
 }
 html{font-size:16px;}
 body{
-  font-family:'Inter',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  overflow-x:hidden;
-  line-height:1.6;
-  position:relative;
-  min-height:100vh;
-  cursor:none; /* Custom cursor */
+  background:var(--space);color:#fff;
+  font-family:'Inter',sans-serif;overflow-x:hidden;
+  min-height:100vh;position:relative;
 }
 
-/* ================== CUSTOM ELITE CURSOR ================== */
-.cursor{
-  position:fixed;width:20px;height:20px;
-  border:2px solid var(--accent);border-radius:50%;
-  pointer-events:none;z-index:9999;
-  transform:translate(-50%,-50%);
-  transition:transform 0.1s ease, width 0.3s, height 0.3s, background 0.3s;
-  mix-blend-mode:difference;
-}
-.cursor.click{
-  width:60px;height:60px;background:var(--accent);
-  box-shadow:var(--click-glow);
-}
-.cursor.hover{
-  width:40px;height:40px;background:rgba(0,238,255,0.2);
-  border-color:var(--gold);
-}
-
-/* ================== DYNAMIC SPACE BACKGROUND ================== */
+/* ================== SPACE BACKGROUND ================== */
 .space-bg{
-  position:fixed;inset:0;z-index:-10;pointer-events:none;
-  background:radial-gradient(circle at 20% 80%, #0a1a3a 0%, #000 40%),
-             radial-gradient(circle at 80% 20%, #1a0033 0%, #000 50%),
-             radial-gradient(circle at 50% 50%, #000428 0%, #000 100%);
+  position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(circle at 15% 85%, #1a0033 0%, transparent 40%),
+    radial-gradient(circle at 85% 15%, #001133 0%, transparent 40%),
+    var(--space);
 }
-.stars-elite{opacity:0.9;}
-.star-elite{
+.stars,.particles,.nebula{pointer-events:none;position:absolute;inset:0;}
+
+/* Stars */
+.star{
   position:absolute;background:#fff;border-radius:50%;
-  box-shadow:0 0 12px #fff, 0 0 25px var(--accent);
-  animation:twinkleElite 2.5s infinite alternate, float 8s infinite ease-in-out;
+  width:2px;height:2px;box-shadow:0 0 8px #fff;
+  animation:twinkle 2.5s infinite alternate;
 }
-@keyframes twinkleElite{
-  0%{opacity:0.4;transform:scale(0.7) rotate(0deg);}
-  100%{opacity:1;transform:scale(1.2) rotate(10deg);}
-}
-@keyframes float{
-  0%,100%{transform:translateY(0) translateX(0);}
-  50%{transform:translateY(-20px) translateX(15px);}
-}
+@keyframes twinkle{0%{opacity:0.4;}100%{opacity:1;}}
 
-.particles-elite{position:absolute;inset:0;}
-.particle-elite{
-  position:absolute;width:2px;height:2px;
-  background:linear-gradient(45deg,var(--accent),var(--gold));
-  border-radius:50%;opacity:0.8;
-  box-shadow:0 0 10px var(--accent);
-  animation:drift 15s linear infinite;
+/* Particles */
+.particle{
+  position:absolute;width:1.5px;height:1.5px;
+  background:var(--cyan);border-radius:50%;
+  box-shadow:0 0 10px var(--cyan);
+  animation:drift 18s linear infinite;
 }
-@keyframes drift{
-  0%{transform:translate(0,0) rotate(0deg);}
-  100%{transform:translate(100vw,100vh) rotate(360deg);}
-}
+@keyframes drift{0%{transform:translate(0,0);}100%{transform:translate(120vw,120vh);}}
 
-.nebula-elite{
-  position:absolute;inset:0;opacity:0.35;mix-blend-mode:screen;
-  background:radial-gradient(circle at 30% 70%, #00eeff33 0%, transparent 50%),
-             radial-gradient(circle at 70% 30%, #ff00cc22 0%, transparent 50%);
-  animation:pulseNebula 12s ease-in-out infinite;
+/* Nebula */
+.nebula{
+  background:
+    radial-gradient(circle at 25% 75%, #00ffff22 0%, transparent 60%),
+    radial-gradient(circle at 75% 25%, #ff00cc11 0%, transparent 60%);
+  opacity:0.4;animation:pulse 12s infinite;
 }
-@keyframes pulseNebula{
-  0%,100%{opacity:0.3;transform:scale(1);}
-  50%{opacity:0.5;transform:scale(1.1);}
-}
+@keyframes pulse{0%,100%{opacity:0.35;}50%{opacity:0.55;}}
 
-/* Shooting Stars - Elite */
+/* Meteors */
 .meteor{
-  position:absolute;height:3px;background:linear-gradient(90deg,var(--accent),transparent);
-  opacity:0;transform-origin:left;
-  box-shadow:0 0 20px var(--accent);
-  animation:meteorFall 4s linear infinite;
+  position:absolute;height:2px;
+  background:linear-gradient(90deg,var(--cyan),transparent);
+  opacity:0;box-shadow:0 0 15px var(--cyan);
+  animation:meteor 3.5s linear infinite;
 }
-@keyframes meteorFall{
-  0%{opacity:0;transform:translateX(-200vw) translateY(-100px) rotate(-45deg) scaleX(0);}
-  15%{opacity:1;transform:translateX(0) translateY(0) rotate(-45deg) scaleX(1);}
-  100%{opacity:0;transform:translateX(150vw) translateY(100vh) rotate(-45deg) scaleX(0.2);}
+@keyframes meteor{
+  0%{opacity:0;transform:translateX(-150vw) translateY(-80px) rotate(-45deg);}
+  12%{opacity:1;}
+  100%{opacity:0;transform:translateX(150vw) translateY(120vh) rotate(-45deg);}
 }
 
-/* ================== HEADER - VIP NAV ================== */
-.vip-nav{
+/* ================== GLASS NAV ================== */
+nav{
   position:fixed;top:0;left:0;right:0;
-  padding:1.2rem 6%;display:flex;align-items:center;justify-content:space-between;
-  backdrop-filter:blur(20px);background:var(--glass);
-  border-bottom:1px solid var(--glass-border);z-index:1000;
-  transition:var(--transition);
+  padding:1.2rem 6%;display:flex;justify-content:space-between;align-items:center;
+  background:var(--glass);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);z-index:1000;
+  transition:0.4s;
 }
-.vip-nav.scrolled{
-  padding:0.9rem 6%;box-shadow:0 15px 40px rgba(0,0,0,0.4);
+nav.scrolled{padding:0.9rem 6%;box-shadow:0 10px 30px rgba(0,0,0,0.4);}
+.logo{
+  height:52px;transition:0.4s;filter:drop-shadow(0 0 8px var(--cyan));
 }
-.logo-vip{
-  height:56px;transition:transform 0.4s cubic-bezier(0.68,-0.55,0.27,1.55);
-  filter:drop-shadow(0 0 10px var(--accent));
+.logo:hover{transform:rotate(-10deg) scale(1.15);}
+.nav-links a{
+  color:#fff;margin:0 1.8rem;font-weight:600;letter-spacing:0.5px;
+  text-decoration:none;position:relative;transition:0.4s;
 }
-.logo-vip:hover{transform:rotate(-12deg) scale(1.15);}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-6px;left:0;width:0;height:2px;
+  background:var(--cyan);transition:0.4s;
+}
+.nav-links a:hover{color:var(--cyan);}
+.nav-links a:hover::after{width:100%;}
 
-nav{display:flex;gap:2.5rem;align-items:center;}
-.nav-link-vip{
-  color:var(--text);text-decoration:none;font-weight:700;
-  position:relative;padding:0.6rem 0;font-size:1rem;
-  letter-spacing:1px;text-transform:uppercase;
-  transition:var(--transition);
-  font-family:'Exo 2',sans-serif;
-}
-.nav-link-vip::before{
-  content:'';position:absolute;bottom:0;left:50%;width:0;height:3px;
-  background:linear-gradient(90deg,var(--accent),var(--gold));
-  transition:var(--transition);border-radius:2px;
-}
-.nav-link-vip:hover{color:var(--accent);}
-.nav-link-vip:hover::before{width:100%;left:0;}
-
-/* Elite Planet Button */
-.btn-atlas{
-  padding:0.9rem 2rem;background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+/* Telescope Button */
+.telescope{
+  padding:0.8rem 1.8rem;background:linear-gradient(135deg,var(--cyan),#00b8b8);
   color:#000;font-weight:900;border-radius:50px;
-  text-decoration:none;font-size:1rem;letter-spacing:1px;
-  box-shadow:0 8px 30px rgba(0,238,255,0.5);
-  transition:var(--transition);position:relative;overflow:hidden;
-  display:flex;align-items:center;gap:10px;
-  font-family:'Orbitron',sans-serif;
+  text-decoration:none;font-size:0.95rem;letter-spacing:1px;
+  box-shadow:0 6px 20px rgba(0,255,255,0.5);
+  transition:0.4s;display:flex;align-items:center;gap:8px;
 }
-.btn-atlas::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,transparent,#fff3,transparent);
-  transform:translateX(-100%);transition:var(--transition);
+.telescope:hover{
+  transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,255,255,0.7);
 }
-.btn-atlas:hover{
-  transform:translateY(-5px) scale(1.05);
-  box-shadow:0 15px 40px rgba(0,238,255,0.7);
-}
-.btn-atlas:hover::before{transform:translateX(100%);}
-.btn-atlas:active{
-  animation:clickPulse 0.6s ease;
-}
-@keyframes clickPulse{
-  0%{box-shadow:0 8px 30px rgba(0,238,255,0.5);}
-  50%{box-shadow:0 0 80px rgba(0,238,255,1), 0 0 120px rgba(0,238,255,0.8);}
-  100%{box-shadow:0 15px 40px rgba(0,238,255,0.7);}
+.telescope:active{animation:clickGlow 0.6s;}
+@keyframes clickGlow{
+  50%{box-shadow:0 0 80px rgba(0,255,255,1);}
 }
 
-/* Mobile */
-.menu-vip{display:none;}
-@media(max-width:1100px){
-  .nav-links-vip{display:none;flex-direction:column;position:absolute;top:100%;left:0;right:0;
-    background:var(--glass);backdrop-filter:blur(20px);padding:1.5rem;
-    border-bottom:1px solid var(--glass-border);
-  }
-  .nav-links-vip.active{display:flex;}
-  .menu-vip{display:flex;}
-}
-
-/* ================== HERO - COSMIC PORTAL ================== */
-.hero-vip{
-  min-height:100vh;display:flex;flex-direction:column;
+/* ================== HERO OBSERVATORY ================== */
+.hero{
+  height:100vh;display:flex;flex-direction:column;
   justify-content:center;align-items:center;text-align:center;
-  padding:3rem;position:relative;overflow:hidden;
+  padding:0 5%;position:relative;
 }
-.hero-vip::before{
+.hero::before{
   content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at center,rgba(0,238,255,0.2),transparent 60%);
-  animation:heroPulse 8s ease-in-out infinite;
+  background:radial-gradient(circle at center,rgba(0,255,255,0.15),transparent 70%);
+  animation:heroPulse 8s infinite;
 }
-@keyframes heroPulse{
-  0%,100%{transform:scale(1);opacity:0.2;}
-  50%{transform:scale(1.3);opacity:0.4;}
-}
+@keyframes heroPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.25);}}
 
-.hero-title-vip{
+.hero h1{
   font-family:'Orbitron',sans-serif;font-size:clamp(4rem,12vw,9rem);
-  font-weight:900;margin-bottom:1.5rem;
-  background:linear-gradient(135deg,#fff,var(--accent),var(--gold),#ff00cc);
+  font-weight:900;background:linear-gradient(135deg,#fff,var(--cyan),var(--gold));
   -webkit-background-clip:text;background-clip:text;
   -webkit-text-fill-color:transparent;
-  text-shadow:0 0 40px rgba(0,238,255,0.6);
-  animation:titleGlow 4s ease-in-out infinite alternate, floatTitle 6s ease-in-out infinite;
+  text-shadow:0 0 40px rgba(0,255,255,0.6);
 }
-@keyframes titleGlow{
-  0%{text-shadow:0 0 40px rgba(0,238,255,0.6);}
-  100%{text-shadow:0 0 80px rgba(0,238,255,1), 0 0 120px rgba(0,238,255,0.6);}
+.hero p{
+  font-size:1.6rem;color:#ccc;margin:1.5rem 0;max-width:800px;
 }
-@keyframes floatTitle{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-20px);}
+.cta{
+  margin-top:2rem;display:flex;gap:1.5rem;flex-wrap:wrap;justify-content:center;
 }
+.cta-btn{
+  padding:1rem 2.8rem;border-radius:50px;font-weight:700;
+  text-decoration:none;transition:0.4s;position:relative;overflow:hidden;
+}
+.subscribe{
+  background:linear-gradient(135deg,var(--cyan),#009999);color:#000;
+  box-shadow:0 8px 25px rgba(0,255,255,0.5);
+}
+.explore{
+  background:transparent;border:2px solid var(--gold);color:#fff;
+}
+.cta-btn:hover{transform:translateY(-6px);}
+.cta-btn:active{animation:clickGlow 0.6s;}
 
-.hero-subtitle-vip{
-  font-family:'Caveat Brush',cursive;font-size:clamp(1.8rem,5vw,3rem);
-  color:#ddd;margin-bottom:3rem;max-width:900px;
-  opacity:0;transform:translateY(30px);
-  animation:fadeInUp 1.2s ease-out 0.8s forwards;
+/* ================== SECTIONS ================== */
+.section{
+  padding:6rem 6%;opacity:0;transform:translateY(60px);
+  transition:1.2s;
 }
-@keyframes fadeInUp{
-  to{opacity:1;transform:translateY(0);}
-}
-
-.cta-vip{
-  display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;
-  margin-top:3rem;
-}
-.cta-btn-vip{
-  padding:1.2rem 3rem;border-radius:60px;font-weight:800;
-  text-decoration:none;transition:var(--transition);font-size:1.2rem;
-  display:inline-flex;align-items:center;gap:12px;position:relative;overflow:hidden;
-}
-.subscribe-vip{
-  background:linear-gradient(135deg,var(--accent),var(--accent-dark));
-  color:#000;box-shadow:0 10px 35px rgba(0,238,255,0.5);
-}
-.explore-vip{
-  background:transparent;color:var(--text);border:3px solid var(--gold);
-  box-shadow:0 0 30px rgba(255,215,0,0.3);
-}
-.cta-btn-vip:hover{
-  transform:translateY(-8px) scale(1.05);
-  box-shadow:0 20px 50px rgba(0,238,255,0.7);
-}
-.cta-btn-vip:active{
-  animation:clickPulse 0.6s ease;
-}
-
-/* ================== SECTION SYSTEM ================== */
-.section-vip{
-  padding:8rem 6%;position:relative;
-  opacity:0;transform:translateY(80px);
-  transition:opacity 1.5s ease,transform 1.5s ease;
-}
-.section-vip.visible{opacity:1;transform:translateY(0);}
-.section-title-vip{
-  text-align:center;font-family:'Orbitron',sans-serif;
-  font-size:clamp(3rem,7vw,5rem);margin-bottom:4rem;
-  background:linear-gradient(135deg,var(--gold),var(--accent),#fff);
+.section.visible{opacity:1;transform:none;}
+.section h2{
+  font-family:'Orbitron',sans-serif;text-align:center;
+  font-size:clamp(2.5rem,6vw,4.5rem);margin-bottom:2rem;
+  background:linear-gradient(135deg,var(--gold),var(--cyan));
   -webkit-background-clip:text;background-clip:text;
   -webkit-text-fill-color:transparent;
-  position:relative;
-}
-.section-title-vip::after{
-  content:'';position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);
-  width:150px;height:5px;background:linear-gradient(90deg,var(--accent),var(--gold));
-  border-radius:3px;box-shadow:0 0 20px var(--accent);
 }
 
-/* Elite Divider */
-.elite-divider{
-  height:3px;background:linear-gradient(90deg,transparent,var(--gold),var(--accent),var(--gold),transparent);
-  margin:6rem auto;width:70%;max-width:800px;border-radius:2px;
-  position:relative;overflow:hidden;
+/* Glass Panel */
+.glass-panel{
+  background:var(--glass);backdrop-filter:blur(16px);
+  border:1px solid var(--border);border-radius:24px;
+  padding:2.5rem;max-width:1100px;margin:2rem auto;
+  box-shadow:var(--glow);transition:0.5s;
 }
-.elite-divider::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(90deg,transparent,#fff3,transparent);
-  animation:shimmer 3s linear infinite;
-}
-@keyframes shimmer{
-  0%{transform:translateX(-100%);}
-  100%{transform:translateX(100%);}
+.glass-panel:hover{
+  transform:translateY(-12px);box-shadow:0 20px 50px rgba(0,255,255,0.3);
 }
 
-/* Glass Card Elite */
-.glass-elite{
-  background:var(--glass);backdrop-filter:blur(20px);
-  border:1px solid var(--glass-border);border-radius:28px;
-  padding:3rem;max-width:1300px;margin:0 auto;
-  box-shadow:var(--shadow);transition:var(--transition);
-  position:relative;overflow:hidden;
+/* ================== 3D ORBIT GALLERY ================== */
+.gallery-3d{
+  perspective:1600px;height:600px;position:relative;
+  display:flex;justify-content:center;align-items:center;
 }
-.glass-elite::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(0,238,255,0.05),transparent);
-  opacity:0;transition:var(--transition);
-}
-.glass-elite:hover{
-  transform:translateY(-15px);
-  box-shadow:0 30px 80px rgba(0,238,255,0.3);
-}
-.glass-elite:hover::before{opacity:1;}
-
-/* ================== GALLERY - INFINITE 3D ORBIT ================== */
-.gallery-orbit{
-  perspective:2000px;position:relative;height:700px;
-  display:flex;align-items:center;justify-content:center;
-  margin:5rem 0;
-}
-.orbit-carousel{
-  position:relative;width:100%;max-width:1000px;height:600px;
+.orbit{
+  position:relative;width:100%;max-width:900px;height:500px;
   transform-style:preserve-3d;
-  animation:orbitRotate 40s infinite linear;
+  animation:spin 35s infinite linear;
 }
-.orbit-carousel:hover{animation-play-state:paused;}
-@keyframes orbitRotate{
-  from{transform:rotateY(0deg) rotateX(5deg);}
-  to{transform:rotateY(360deg) rotateX(5deg);}
-}
+.orbit:hover{animation-play-state:paused;}
+@keyframes spin{from{transform:rotateY(0deg);}to{transform:rotateY(360deg);}}
 .orbit-item{
   position:absolute;top:0;left:0;width:100%;height:100%;
-  border-radius:28px;overflow:hidden;
-  box-shadow:0 25px 60px rgba(0,0,0,0.6);
-  transition:transform 0.8s ease;
-  backface-visibility:hidden;border:2px solid transparent;
+  border-radius:24px;overflow:hidden;
+  box-shadow:0 15px 40px rgba(0,0,0,0.5);
+  backface-visibility:hidden;
 }
 .orbit-item img{
-  width:100%;height:100%;object-fit:cover;
-  transition:transform 0.8s ease;
+  width:100%;height:100%;object-fit:cover;transition:0.6s;
 }
-.orbit-item:hover{
-  border-color:var(--gold);transform:scale(1.05);
-  box-shadow:0 0 80px rgba(255,215,0,0.5);
-}
-.orbit-item:hover img{transform:scale(1.1);}
+.orbit-item:hover img{transform:scale(1.08);}
 
-/* ================== PLANETS - ORBITAL DATA CORE ================== */
-.planet-core{
-  text-align:center;padding:8rem 6%;
+/* ================== PLANET CORE ================== */
+.planet-core{text-align:center;}
+.stats{
+  display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;margin:3rem 0;
 }
-.data-orbit{
-  display:flex;justify-content:center;gap:4rem;flex-wrap:wrap;
-  margin:4rem 0;
+.stat{
+  width:160px;height:160px;position:relative;
 }
-.core-ring{
-  position:relative;width:220px;height:220px;
+.ring{
+  position:absolute;inset:0;border:2px dashed var(--cyan);
+  border-radius:50%;animation:ringSpin 9s linear infinite;
 }
-.ring-glow{
-  position:absolute;inset:0;border:3px solid var(--accent);
-  border-radius:50%;animation:spinGlow 10s linear infinite;
-  box-shadow:0 0 30px var(--accent), inset 0 0 20px var(--accent);
-}
-@keyframes spinGlow{
-  to{transform:rotate(360deg);}
-}
-.data-center{
+@keyframes ringSpin{to{transform:rotate(360deg);}}
+.core{
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  background:var(--glass);width:130px;height:130px;
+  background:var(--glass);width:90px;height:90px;
   border-radius:50%;display:flex;flex-direction:column;
   justify-content:center;align-items:center;
-  backdrop-filter:blur(15px);border:2px solid var(--gold);
-  transition:var(--transition);font-family:'Orbitron',sans-serif;
+  border:2px solid var(--gold);backdrop-filter:blur(10px);
+  transition:0.5s;
 }
-.data-center:hover{
+.core:hover{
   background:var(--gold);color:#000;
-  transform:translate(-50%,-50%) scale(1.2);
-  box-shadow:0 0 60px rgba(255,215,0,0.8);
+  transform:translate(-50%,-50%) scale(1.15);
 }
-.data-number{
-  font-size:2.2rem;font-weight:900;
-}
-.data-label{font-size:1rem;letter-spacing:1px;}
+.core h3{font-size:1.8rem;font-weight:900;}
+.core p{font-size:0.9rem;}
 
-/* Atlas Launch */
-.atlas-launch{
-  display:inline-flex;align-items:center;gap:15px;
-  padding:1.5rem 3.5rem;background:linear-gradient(135deg,var(--accent),var(--gold));
+/* Telescope Launch */
+.launch{
+  display:inline-flex;align-items:center;gap:12px;
+  padding:1.3rem 3rem;background:linear-gradient(135deg,var(--cyan),var(--gold));
   color:#000;border-radius:60px;font-weight:900;
-  text-decoration:none;font-size:1.4rem;letter-spacing:1px;
-  margin-top:3rem;box-shadow:0 15px 50px rgba(0,238,255,0.6);
-  transition:var(--transition);position:relative;overflow:hidden;
+  text-decoration:none;font-size:1.3rem;margin-top:2rem;
+  box-shadow:0 12px 35px rgba(0,255,255,0.6);
+  transition:0.5s;
 }
-.atlas-launch:hover{
-  transform:translateY(-10px) scale(1.08);
-  box-shadow:0 25px 70px rgba(0,238,255,0.8);
+.launch:hover{
+  transform:translateY(-8px) scale(1.06);
+  box-shadow:0 20px 50px rgba(0,255,255,0.8);
 }
-.atlas-launch:active{animation:clickPulse 0.6s ease;}
+.launch:active{animation:clickGlow 0.6s;}
 
-/* ================== CONTACT - VIP FORM ================== */
-.contact-vip{
-  display:grid;grid-template-columns:1fr 1fr;gap:4rem;
-  max-width:1300px;margin:0 auto;align-items:center;
+/* ================== CONTACT ================== */
+.contact-form{max-width:600px;margin:0 auto;}
+.contact-form input,.contact-form textarea{
+  width:100%;padding:1.2rem;margin:1rem 0;
+  background:rgba(255,255,255,0.08);border:1px solid var(--border);
+  border-radius:16px;color:#fff;transition:0.4s;
 }
-.vip-form input,.vip-form textarea{
-  width:100%;padding:1.3rem 1.8rem;margin-bottom:1.5rem;
-  background:rgba(255,255,255,0.05);border:2px solid var(--glass-border);
-  border-radius:20px;color:var(--text);font-size:1.1rem;
-  transition:var(--transition);
-}
-.vip-form input:focus,.vip-form textarea:focus{
+.contact-form input:focus,.contact-form textarea:focus{
   outline:none;border-color:var(--gold);
-  background:rgba(255,215,0,0.1);
-  box-shadow:0 0 30px rgba(255,215,0,0.4);
+  box-shadow:0 0 20px rgba(255,204,0,0.4);
 }
-.vip-form button{
-  padding:1.3rem 3rem;background:linear-gradient(135deg,var(--gold),var(--accent));
-  color:#000;border:none;border-radius:60px;font-weight:900;
-  cursor:pointer;font-size:1.2rem;transition:var(--transition);
+.contact-form button{
+  width:100%;padding:1.2rem;background:var(--cyan);color:#000;
+  border:none;border-radius:50px;font-weight:700;cursor:pointer;
+  transition:0.4s;
 }
-.vip-form button:hover{
-  transform:translateY(-5px);box-shadow:0 15px 40px rgba(255,215,0,0.6);
+.contact-form button:hover{
+  background:var(--gold);color:#000;
+  transform:translateY(-3px);
 }
-.vip-form button:active{animation:clickPulse 0.6s ease;}
+.contact-form button:active{animation:clickGlow 0.6s;}
 
 /* ================== FOOTER ================== */
-.vip-footer{
-  text-align:center;padding:4rem 6%;background:var(--glass);
-  backdrop-filter:blur(20px);border-top:1px solid var(--glass-border);
-  font-size:1rem;color:#ccc;
+footer{
+  text-align:center;padding:2rem;background:var(--glass);
+  backdrop-filter:blur(14px);border-top:1px solid var(--border);
+  font-size:0.9rem;color:#aaa;
 }
-.vip-footer a{color:var(--accent);text-decoration:none;transition:var(--transition);}
-.vip-footer a:hover{color:var(--gold);}
 
-/* ================== RESPONSIVE ================== */
-@media(max-width:1100px){
-  .about-grid-vip{grid-template-columns:1fr;}
-  .contact-vip{grid-template-columns:1fr;}
-  .data-orbit{gap:3rem;}
-  .core-ring{width:180px;height:180px;}
-  .data-center{width:100px;height:100px;}
+/* ================== MOBILE ================== */
+@media(max-width:992px){
+  .stats{gap:2rem;}
+  .stat{width:130px;height:130px;}
+  .core{width:70px;height:70px;}
 }
 @media(max-width:600px){
-  .hero-vip{padding:2rem;}
-  .cta-vip{gap:1.5rem;}
-  .cta-btn-vip{padding:1rem 2rem;font-size:1.1rem;}
-  .section-vip{padding:5rem 1rem;}
-  .glass-elite{padding:2.5rem;}
-  .atlas-launch{padding:1.2rem 2.5rem;font-size:1.2rem;}
+  .nav-links a{margin:0.5rem 0;}
+  .cta{flex-direction:column;align-items:center;}
 }
 </style>
 </head>
 <body>
 
-<!-- CUSTOM CURSOR -->
-<div class="cursor"></div>
-
-<!-- ELITE SPACE BACKGROUND -->
+<!-- SPACE BACKGROUND -->
 <div class="space-bg">
-  <div class="stars-elite"></div>
-  <div class="particles-elite"></div>
-  <div class="nebula-elite"></div>
+  <div class="stars" id="stars"></div>
+  <div class="particles" id="particles"></div>
+  <div class="nebula"></div>
 </div>
 
-<!-- VIP NAV -->
-<header class="vip-nav" id="vipNav">
-  <img src="assets/logo.png" alt="ZTA Elite" class="logo-vip">
-  <nav>
-    <div class="menu-vip" id="menuVip">
-      <i class="fas fa-bars"></i>
-    </div>
-    <div class="nav-links-vip" id="navLinksVip">
-      <a href="#home" class="nav-link-vip">Home</a>
-      <a href="#about" class="nav-link-vip">About</a>
-      <a href="#gallery" class="nav-link-vip">Gallery</a>
-      <a href="#planets" class="nav-link-vip">ExoPlanets</a>
-      <a href="#contact" class="nav-link-vip">Contact</a>
-      <a href="https://ztaa.netlify.app/" target="_blank" class="btn-atlas">
-        <i class="fas fa-rocket"></i> Launch Atlas
-      </a>
-    </div>
-  </nav>
-</header>
-
-<!-- HERO PORTAL -->
-<section class="hero-vip" id="home">
-  <h1 class="hero-title-vip">ZTA</h1>
-  <p class="hero-subtitle-vip">Elite Astrophotography • ExoPlanet Exploration</p>
-  <div class="cta-vip">
-    <a href="https://youtube.com/@zta69" target="_blank" class="cta-btn-vip subscribe-vip">
-      <i class="fab fa-youtube"></i> Subscribe
-    </a>
-    <a href="#planets" class="cta-btn-vip explore-vip">
-      <i class="fas fa-globe"></i> Enter Atlas
+<!-- NAV -->
+<nav id="nav">
+  <img src="assets/logo.png" alt="ZTA" class="logo">
+  <div class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#planets">ExoPlanets</a>
+    <a href="#contact">Contact</a>
+    <a href="https://ztaa.netlify.app/" target="_blank" class="telescope">
+      Telescope Launch Atlas
     </a>
   </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <h1>ZTA</h1>
+  <p>Observatory-grade astrophotography • Real-time exoplanet atlas</p>
+  <div class="cta">
+    <a href="https://youtube.com/@zta69" target="_blank" class="cta-btn subscribe">Subscribe</a>
+    <a href="#planets" class="cta-btn explore">Enter Atlas</a>
+  </div>
 </section>
 
-<div class="elite-divider"></div>
-
-<!-- ABOUT -->
-<section class="section-vip" id="about">
-  <h2 class="section-title-vip">Elite Mission</h2>
-  <div class="glass-elite">
-    <div class="about-grid-vip">
-      <div class="about-text-vip">
-        <p>ZTA operates at the frontier of deep-space imaging. Using observatory-grade equipment and AI-enhanced processing, we capture the universe in unprecedented detail.</p>
-        <p>Our ExoPlanet Atlas is the world's most advanced public database — featuring real-time data from NASA, ESA, and citizen astronomers.</p>
-        <p>Join the elite circle of cosmic explorers.</p>
-      </div>
-      <div class="about-image-vip">
-        <img src="assets/gallery/1.jpg" alt="ZTA Elite" loading="lazy">
-      </div>
+<!-- GALLERY -->
+<section class="section" id="gallery">
+  <h2>Cosmic Gallery</h2>
+  <div class="glass-panel">
+    <div class="gallery-3d">
+      <div class="orbit" id="orbit"></div>
     </div>
   </div>
 </section>
 
-<div class="elite-divider"></div>
-
-<!-- INFINITE ORBIT GALLERY -->
-<section class="section-vip" id="gallery">
-  <h2 class="section-title-vip">Cosmic Vault</h2>
-  <div class="gallery-orbit">
-    <div class="orbit-carousel" id="orbitCarousel"></div>
+<!-- PLANETS -->
+<section class="section" id="planets">
+  <h2>ExoPlanet Atlas</h2>
+  <div class="glass-panel planet-core">
+    <p style="max-width:800px;margin:0 auto 2rem;color:#ccc;">
+      <strong>5,700+</strong> confirmed worlds • <strong>200+</strong> potentially habitable
+    </p>
+    <div class="stats">
+      <div class="stat"><div class="ring"></div><div class="core"><h3>5.7K</h3><p>Exoplanets</p></div></div>
+      <div class="stat"><div class="ring"></div><div class="core"><h3>200</h3><p>Habitable</p></div></div>
+      <div class="stat"><div class="ring"></div><div class="core"><h3>4.2K</h3><p>Systems</p></div></div>
+    </div>
+    <a href="https://ztaa.netlify.app/" target="_blank" class="launch">
+      LAUNCH TELESCOPE
+    </a>
   </div>
 </section>
 
-<div class="elite-divider"></div>
-
-<!-- EXOPLANET DATA CORE -->
-<section class="section-vip planet-core" id="planets">
-  <h2 class="section-title-vip">ExoPlanet Atlas</h2>
-  <p style="text-align:center;max-width:1000px;margin:0 auto 4rem;color:#ddd;font-size:1.2rem;">
-    <strong>5,700+ confirmed worlds</strong> • <strong>200+ habitable zones</strong> • <strong>4,200+ systems</strong>
-  </p>
-  
-  <div class="data-orbit">
-    <div class="core-ring">
-      <div class="ring-glow"></div>
-      <div class="data-center">
-        <div class="data-number">5,700</div>
-        <div class="data-label">EXOPLANETS</div>
-      </div>
-    </div>
-    <div class="core-ring">
-      <div class="ring-glow"></div>
-      <div class="data-center">
-        <div class="data-number">200</div>
-        <div class="data-label">HABITABLE</div>
-      </div>
-    </div>
-    <div class="core-ring">
-      <div class="ring-glow"></div>
-      <div class="data-center">
-        <div class="data-number">4,200</div>
-        <div class="data-label">SYSTEMS</div>
-      </div>
-    </div>
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <h2>Contact Observatory</h2>
+  <div class="glass-panel">
+    <form class="contact-form" action="https://formspree.io/f/meopyjgn" method="POST">
+      <input type="text" name="name" placeholder="Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <textarea name="message" rows="5" placeholder="Message" required></textarea>
+      <button type="submit">Transmit</button>
+    </form>
   </div>
-
-  <a href="https://ztaa.netlify.app/" target="_blank" class="atlas-launch">
-    <i class="fas fa-satellite-dish"></i> LAUNCH TELESCOPE
-  </a>
 </section>
 
-<div class="elite-divider"></div>
+<footer>© 2025 ZTA Observatory • All Rights Reserved</footer>
 
-<!-- VIP CONTACT -->
-<section class="section-vip" id="contact">
-  <h2 class="section-title-vip">VIP Access</h2>
-  <div class="glass-elite">
-    <div class="contact-vip">
-      <div class="vip-form">
-        <form action="https://formspree.io/f/meopyjgn" method="POST">
-          <input type="text" name="name" placeholder="Elite Name" required>
-          <input type="email" name="email" placeholder="Secure Email" required>
-          <textarea rows="5" name="message" placeholder="Classified Message" required></textarea>
-          <button type="submit">Transmit
+<script>
+// NAV SCROLL
+const nav = document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>50));
+
+// SECTION REVEAL
+const sections=document.querySelectorAll('.section');
+const obs=new IntersectionObserver(e=>e.forEach(en=>en.isIntersecting&&en.target.classList.add('visible')),{threshold:0.15});
+sections.forEach(s=>obs.observe(s));
+
+// STARS
+const stars=document.getElementById('stars');
+for(let i=0;i<200;i++){
+  const s=document.createElement('div');
+  s.className='star';
+  s.style.left=Math.random()*100+'%';
+  s.style.top=Math.random()*100+'%';
+  s.style.animationDelay=Math.random()*2.5+'s';
+  stars.appendChild(s);
+}
+
+// PARTICLES
+const particles=document.getElementById('particles');
+for(let i=0;i<120;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  p.style.left=Math.random()*100+'%';
+  p.style.top=Math.random()*100+'%';
+  p.style.animationDelay=Math.random()*18+'s';
+  particles.appendChild(p);
+}
+
+// METEORS
+setInterval(()=>{
+  const m=document.createElement('div');
+  m.className='meteor';
+  m.style.top=Math.random()*60+'%';
+  document.body.appendChild(m);
+  setTimeout(()=>m.remove(),3500);
+},2200);
+
+// 3D ORBIT GALLERY
+const orbit=document.getElementById('orbit');
+let imgs=[];
+function loadGallery(){
+  let i=1;
+  function next(){
+    const img=new Image();
+    img.src=`assets/gallery/${i}.jpg`;
+    img.onload=()=>{
+      imgs.push(img.src);
+      const el=document.createElement('div');
+      el.className='orbit-item';
+      el.innerHTML=`<img src="${img.src}" loading="lazy">`;
+      orbit.appendChild(el);
+      i++;next();
+    };
+    img.onerror=()=>positionOrbit();
+  }
+  next();
+}
+function positionOrbit(){
+  const r=350;
+  document.querySelectorAll('.orbit-item').forEach((el,i)=>{
+    const a=(i*2*Math.PI)/imgs.length;
+    const x=r*Math.sin(a), z=r*Math.cos(a);
+    el.style.transform=`rotateY(${a}rad) translateX(${x}px) translateZ(${z}px)`;
+  });
+}
+loadGallery();
+</script>
+</body>
+</html>
